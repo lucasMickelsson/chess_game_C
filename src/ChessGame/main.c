@@ -3,6 +3,9 @@
 #include <conio.h>
 
 void printLines(void);
+void clear_buffer();
+int user_selection();
+void printChessModeOptions();
 
 void printLines(void)
 {
@@ -34,9 +37,8 @@ void printWelcomeMessage(void)
     printf("           'press enter to continue'");
 }
 
-int main(void)
+void printStart(void)
 {
-    // bool exitProgram = false;
     int confirm;
     do
     {
@@ -44,6 +46,73 @@ int main(void)
         printWelcomeMessage();
         confirm = getch();
     } while (confirm != 13);
+}
+void printMenyOptions()
+{
+    printf("\nChess Menu options:\n\n");
+    printf("1. Play Chess\n");
+    printf("\n2. Chess Rules\n");
+    printf("\n3. Quit\n");
+}
+void clear_buffer()
+{
+    while (getchar() != '\n')
+    {
+    }
+}
+int user_selection()
+{
+    int selection;
+    printf("Your choice: ");
+    while (scanf("%d", &selection) != 1)
+    {
+        printf("Invalid input\n");
+        clear_buffer();
+        printf("Try again: ");
+    }
+    return selection;
+}
 
-    // printLogo();
+void printChessModeOptions()
+{
+    printf("\nChess options:\n\n");
+    printf("1. Play Normal Chess\n");
+    printf("\n2. Play Pawn Chess\n");
+    printf("\n3. Return\n");
+}
+
+int main(void)
+{
+    bool exitProgram = false;
+    int choice;
+    printStart();
+
+    do
+    {
+        printLogo();
+        printMenyOptions();
+        choice = user_selection();
+
+        switch (choice)
+        {
+        case 1:
+            printf("Play game");
+            break;
+
+        case 2:
+            printf("This is the rules");
+            break;
+
+        case 3:
+            exitProgram = true;
+            break;
+
+        default:
+            printf("Invalid option");
+            break;
+        }
+
+    } while (!exitProgram);
+
+    return 0;
 }
