@@ -1,5 +1,5 @@
 # compile flag
-CFLAG = -Wall -pedantic
+CFLAGS = -Wall -pedantic -g
 
 # operating system dependent variables
 ifeq ($(OS), Windows_NT)
@@ -13,3 +13,6 @@ EXEEXT =
 endif
 
 # Targets
+
+chess$(EXEEXT): main.c
+	gcc $(CFLAGS) main.c -o chess
