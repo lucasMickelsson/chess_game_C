@@ -14,5 +14,5 @@ endif
 
 # Targets
 
-chess$(EXEEXT): main.c
+chess$(EXEEXT): main.c main.h
 	gcc $(CFLAGS) main.c -o chess
