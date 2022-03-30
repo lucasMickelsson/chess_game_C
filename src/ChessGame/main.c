@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <conio.h>
-
-void printLines(void);
-void clear_buffer();
-int user_selection();
-void printChessModeOptions();
+#include "main.h"
 
 void printLines(void)
 {
@@ -42,6 +39,7 @@ void printStart(void)
     int confirm;
     do
     {
+        system("cls"); // clear the screen from previous output of meny
         printLogo();
         printWelcomeMessage();
         confirm = getch();
@@ -52,7 +50,7 @@ void printMenyOptions()
     printf("\nChess Menu options:\n\n");
     printf("1. Play Chess\n");
     printf("\n2. Chess Rules\n");
-    printf("\n3. Quit\n");
+    printf("\n3. Quit\n\n");
 }
 void clear_buffer()
 {
@@ -76,9 +74,56 @@ int user_selection()
 void printChessModeOptions()
 {
     printf("\nChess options:\n\n");
-    printf("1. Play Normal Chess\n");
+    printf("1. Play Classic Chess\n");
     printf("\n2. Play Pawn Chess\n");
-    printf("\n3. Return\n");
+    printf("\n3. Return back to main menu\n\n");
+}
+void handleChessOptions()
+{
+    bool back = false, result;
+    int option;
+    do
+    {
+        printLogo();
+        printChessModeOptions();
+        option = user_selection();
+        switch (option)
+        {
+        case 1:
+            result = playComputerOrNot();
+            // chess functions
+            break;
+
+        case 2:
+            result = playComputerOrNot();
+            // chess functions
+            break;
+
+        case 3:
+            back = true;
+            break;
+
+        default:
+            printf("Invalid option");
+            break;
+        }
+    } while (!back);
+}
+
+bool playComputerOrNot()
+{
+    char confirm;
+    printf("Play against the computer(y/n)(if not you will a 2 player game)?");
+    scanf("%c ", &confirm);
+
+    if (confirm == 'y' || confirm == 'Y')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 int main(void)
@@ -96,7 +141,7 @@ int main(void)
         switch (choice)
         {
         case 1:
-            printf("Play game");
+            handleChessOptions();
             break;
 
         case 2:
