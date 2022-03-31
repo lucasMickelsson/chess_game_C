@@ -1,0 +1,6 @@
+Example of pawn chess:
+
+https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/erik/phpPbxgAU.gif
+
+Classic chess:
+https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpHsVKt1.gif
