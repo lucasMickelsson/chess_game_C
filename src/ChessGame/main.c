@@ -80,7 +80,7 @@ void printChessModeOptions()
 }
 void handleChessOptions()
 {
-    bool back = false, result;
+    bool back = false;
     int option;
     do
     {
@@ -90,12 +90,10 @@ void handleChessOptions()
         switch (option)
         {
         case 1:
-            result = playComputerOrNot();
             // chess functions
             break;
 
         case 2:
-            result = playComputerOrNot();
             // chess functions
             break;
 
@@ -110,7 +108,7 @@ void handleChessOptions()
     } while (!back);
 }
 
-bool playComputerOrNot()
+/*bool playComputerOrNot()
 {
     char confirm;
     printf("Play against the computer(y/n)(if not you will a 2 player game)?");
@@ -124,7 +122,7 @@ bool playComputerOrNot()
     {
         return false;
     }
-}
+}*/
 
 int main(void)
 {
