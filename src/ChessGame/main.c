@@ -90,7 +90,7 @@ void handleChessOptions()
         switch (option)
         {
         case 1:
-            // chess functions
+
             break;
 
         case 2:
@@ -123,6 +123,14 @@ void handleChessOptions()
         return false;
     }
 }*/
+
+void player1()
+{
+}
+
+void player2()
+{
+}
 
 int main(void)
 {
