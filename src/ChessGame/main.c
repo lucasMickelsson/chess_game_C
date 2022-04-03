@@ -90,11 +90,11 @@ void handleChessOptions()
         switch (option)
         {
         case 1:
-
+            selectNumbOfPlayers();
             break;
 
         case 2:
-            // chess functions
+            selectNumbOfPlayers();
             break;
 
         case 3:
@@ -108,21 +108,58 @@ void handleChessOptions()
     } while (!back);
 }
 
-/*bool playComputerOrNot()
+void modeOptions()
 {
-    char confirm;
-    printf("Play against the computer(y/n)(if not you will a 2 player game)?");
-    scanf("%c ", &confirm);
+    printf("\nSelect number of players:\n\n");
+    printf("1. 2 players\n");
+    printf("\n2. 1 player (You vs AI)\n");
+    printf("\n3. Return back\n\n");
+}
+void selectNumbOfPlayers()
+{
+    bool back = false;
+    int option;
+    do
+    {
+        printLogo();
+        modeOptions();
+        option = user_selection();
+        switch (option)
+        {
+        case 1:
+            print2PlayerModeInfo();
+            // function for starting the game
+            break;
 
-    if (confirm == 'y' || confirm == 'Y')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}*/
+        case 2:
+            print1PlayerModeInfo();
+            // function for starting the game
+            break;
+
+        case 3:
+            back = true;
+            break;
+
+        default:
+            printf("Invalid option");
+            break;
+        }
+    } while (!back);
+}
+void print1PlayerModeInfo()
+{
+    printf("\n\nWelcome to 1-player chess! enter input as shown: squareToStart squareToEnd\n");
+    printf("you will play as white while the AI plays as black.\n");
+    printf("for example, to move the piece at A1 to B2, you would type: A1 B2\n");
+    printf("enter 'exit' to leave the mode\n\n");
+}
+void print2PlayerModeInfo()
+{
+    printf("\n\nWelcome to 2-player chess! enter input as shown: squareToStart squareToEnd\n");
+    printf("for example, to move the piece at A1 to B2, you would type: A1 B2\n");
+    printf("One of you plays as white an the other one as black\n");
+    printf("enter 'exit' to leave the mode\n\n");
+}
 
 void player1()
 {

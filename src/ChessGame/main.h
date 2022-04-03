@@ -12,5 +12,9 @@ void printWelcomeMessage(void);
 void printStart(void);
 void printMenyOptions();
 void clear_buffer();
+void selectNumbOfPlayers();
+void modeOptions(void);
+void print1PlayerModeInfo();
+void print2PlayerModeInfo();
 
 #endif
