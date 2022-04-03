@@ -16,5 +16,6 @@ void selectNumbOfPlayers();
 void modeOptions(void);
 void print1PlayerModeInfo();
 void print2PlayerModeInfo();
+void confirm();
 
 #endif

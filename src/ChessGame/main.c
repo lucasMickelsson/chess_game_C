@@ -152,7 +152,14 @@ void print1PlayerModeInfo()
     printf("Then enter the endsquare for choosen piece: squareToEnd\n");
     printf("you will play as white while the AI plays as black.\n");
     printf("enter 'exit' to leave the mode\n\n");
+    confirm();
 }
+void confirm()
+{
+    printf("Press any key to continue");
+    getch();
+}
+
 void print2PlayerModeInfo()
 {
     printf("\n\nWelcome to 2-player chess! enter input as shown: squareToStart\n");
@@ -161,6 +168,7 @@ void print2PlayerModeInfo()
     printf("Then you type in: B2 then enter\n");
     printf("One of you plays as white an the other one as black\n");
     printf("enter 'exit' to leave the mode\n\n");
+    confirm();
 }
 
 void player1()
