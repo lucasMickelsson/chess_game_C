@@ -148,15 +148,17 @@ void selectNumbOfPlayers()
 }
 void print1PlayerModeInfo()
 {
-    printf("\n\nWelcome to 1-player chess! enter input as shown: squareToStart squareToEnd\n");
+    printf("\n\nWelcome to 1-player chess! enter input as shown: squareToStart\n");
+    printf("Then enter the endsquare for choosen piece: squareToEnd\n");
     printf("you will play as white while the AI plays as black.\n");
-    printf("for example, to move the piece at A1 to B2, you would type: A1 B2\n");
     printf("enter 'exit' to leave the mode\n\n");
 }
 void print2PlayerModeInfo()
 {
-    printf("\n\nWelcome to 2-player chess! enter input as shown: squareToStart squareToEnd\n");
-    printf("for example, to move the piece at A1 to B2, you would type: A1 B2\n");
+    printf("\n\nWelcome to 2-player chess! enter input as shown: squareToStart\n");
+    printf("Then enter the endsquare for choosen piece: squareToEnd\n");
+    printf("for example, to move the piece at A1 to B2, you would type: A1 then enter\n");
+    printf("Then you type in: B2 then enter\n");
     printf("One of you plays as white an the other one as black\n");
     printf("enter 'exit' to leave the mode\n\n");
 }
