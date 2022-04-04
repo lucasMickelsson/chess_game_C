@@ -25,15 +25,15 @@ a_piece *push(a_piece *headptr, piece data)
     newpiece = malloc(sizeof(a_piece));
     newpiece->the_piece = data;
 
-    if (list_empty(headptr))
+    if (headptr == NULL)
     {
+        headptr = newpiece;
         newpiece->next = NULL;
-        newpiece = headptr;
     }
     else
     {
         newpiece->next = headptr;
-        newpiece = headptr;
+        headptr = newpiece;
     }
     return headptr;
 }

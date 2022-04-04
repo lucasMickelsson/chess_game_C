@@ -1,5 +1,6 @@
 #ifndef PIECESH
 #define PIECESH
+#include <stdbool.h>
 
 typedef struct piece
 {

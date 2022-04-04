@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "chessBoard.h"
 
+char board[8][8];
+
+int pawnBlackStatus[8] = {0};
+int pawnWhiteStatus[8] = {0};
+
 void initChessBoard()
 {
     board[0][0] = TOWER;
