@@ -17,7 +17,7 @@
 /**
  * Function for building and initialize every position to a piece
  */
-void initChessBoard();
+void initChessBoard(char board[8][8]);
 
 /**
  * Function for printing the board on the screen

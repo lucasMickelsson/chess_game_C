@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include "chessBoard.h"
 
-char board[8][8];
+// char board[8][8];
 
 int pawnBlackStatus[8] = {0};
 int pawnWhiteStatus[8] = {0};
 
-void initChessBoard()
+void initChessBoard(char board[8][8])
 {
+
     board[0][0] = TOWER;
     board[0][1] = HORSE;
     board[0][2] = BISHOP;
