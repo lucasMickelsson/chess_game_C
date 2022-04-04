@@ -16,6 +16,9 @@
 
 char board[8][8];
 
+int pawnBlackStatus[8] = {0};
+int pawnWhiteStatus[8] = {0};
+
 /**
  * Function for building and initialize every position to a piece
  */
