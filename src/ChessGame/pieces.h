@@ -1,28 +1,17 @@
 #ifndef PIECESH
 #define PIECESH
 
-// every chess piece has been given an unique id
-// black pieces will have pieceID + 50
-#define BLACK 50
-#define WHITE 0
-#define EMPTY 0
-
-#define PAWN 1
-#define TOWER 2
-#define HORSE 3
-#define BISHOP 4
-#define QUEEN 5
-#define KING 6
+int pawnBlackStatus[8] = {0};
+int pawnWhiteStatus[8] = {0};
 
 typedef struct piece
 {
     char color;
     char pieceID;
-    char posX;
-    char poxY;
     bool piece_dead;
 } piece;
 
+/*We will store total number of pieces in a list */
 typedef struct piece_list
 {
     piece the_piece;
