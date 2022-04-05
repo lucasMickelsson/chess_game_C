@@ -44,3 +44,108 @@ void initChessBoard(char board[8][8])
     board[7][6] = HORSE + BLACK;
     board[7][7] = TOWER + BLACK;
 }
+void printBoard(char board[8][8])
+{
+    char pieceId;
+    for (int i = 7; i >= 0; i--)
+    {
+        printf("%d|", i + 1);
+        for (int j = 0; j < 8; j++)
+        {
+            pieceId = getPieceAtPosition(board, i, j);
+            printPieceStrings(pieceId);
+            if (j < 8)
+            {
+                printf("|");
+            }
+        }
+        printf("\n");
+        printChessBoardLines();
+        printf("\n");
+    }
+    printf("     A       B       C       D       E       F       G       H");
+}
+char getPieceAtPosition(char board[8][8], int row, int col)
+{
+    if (row >= 0 && col >= 0 && row < 8 && col < 8)
+    {
+        return board[row][col];
+    }
+    else
+    {
+        return -1;
+    }
+}
+void printPieceStrings(char pieceId)
+{
+    if (pieceId == EMPTY)
+    {
+        printf("       ");
+    }
+    else if (pieceId > BLACK)
+    {
+        pieceId = pieceId - BLACK;
+        switch (pieceId)
+        {
+        case PAWN:
+            printf(" bPawn ");
+            break;
+
+        case TOWER:
+            printf(" bTower");
+            break;
+
+        case HORSE:
+            printf(" bHorse");
+            break;
+
+        case BISHOP:
+            printf("bBishop");
+            break;
+
+        case QUEEN:
+            printf(" bQueen");
+            break;
+
+        case KING:
+            printf(" bKing ");
+            break;
+        }
+    }
+    else
+    {
+        switch (pieceId)
+        {
+        case PAWN:
+            printf(" wPawn ");
+            break;
+
+        case TOWER:
+            printf(" wTower");
+            break;
+
+        case HORSE:
+            printf(" wHorse");
+            break;
+
+        case BISHOP:
+            printf("wBishop");
+            break;
+
+        case QUEEN:
+            printf(" wQueen");
+            break;
+
+        case KING:
+            printf(" wKing ");
+            break;
+        }
+    }
+}
+void printChessBoardLines()
+{
+    for (int i = 0; i < 65; i++)
+    {
+        printf("-");
+    }
+}

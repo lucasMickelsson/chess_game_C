@@ -9,4 +9,26 @@
 
 int main(void)
 {
+    TEST_CASE("Init a new chessBoard");
+    char board[8][8];
+    initChessBoard(board);
+
+    TEST_CASE("Get a specific piece at given position");
+    char getPiece = getPieceAtPosition(board, 0, 0);
+    VERIFY(getPiece == TOWER, "Its a white tower");
+    getPiece = getPieceAtPosition(board, 1, 0);
+    VERIFY(getPiece == PAWN, "Its a white pawn");
+
+    getPiece = getPieceAtPosition(board, 6, 0);
+    VERIFY(getPiece == PAWN + BLACK, "Its a black pawn");
+
+    getPiece = getPieceAtPosition(board, 0, 9);
+    VERIFY(getPiece == -1, "Its an illegal position");
+
+    getPiece = getPieceAtPosition(board, -1, 6);
+    VERIFY(getPiece == -1, "Its an illegal position");
+
+    TEST_CASE("Print the board");
+    printf("\n\n");
+    printBoard(board);
 }

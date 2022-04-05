@@ -22,6 +22,10 @@ void initChessBoard(char board[8][8]);
 /**
  * Function for printing the board on the screen
  */
-void printBoard();
+void printBoard(char board[8][8]);
+
+char getPieceAtPosition(char board[8][8], int row, int col);
+void printPieceStrings(char pieceId);
+void printChessBoardLines();
 
 #endif
