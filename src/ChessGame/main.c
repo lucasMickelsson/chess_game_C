@@ -183,18 +183,24 @@ void player2()
 }
 void chessGameGo(int chessMode)
 {
-    /*char command[15];
-    do
-    {
-        readString(command, 15);
-    } while (strcmp(command, "quit") == 0 || strcmp(command, "Quit") == 0);*/
-    char chessBoard[8][8];
+    char chessBoard[8][8], command[15];
     initChessBoard(chessBoard);
     printBoard(chessBoard);
+    bool go = true;
+    while (go)
+    {
+        readString(command, 15);
+        printf("%s\n", command);
+        if (strcmp(command, "quit") == 0)
+        {
+            go = false;
+        }
+    }
 }
 
 void readString(char array[], int size)
 {
+    printf("\n\nEnter a string: ");
     fgets(array, size, stdin);
     int length = strlen(array);
 
