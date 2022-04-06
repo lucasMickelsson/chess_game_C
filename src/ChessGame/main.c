@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string.h>
+#include "chessBoard.h"
 #include "main.h"
 
 void printLines(void)
@@ -90,11 +92,11 @@ void handleChessOptions()
         switch (option)
         {
         case 1:
-            selectNumbOfPlayers();
+            selectNumbOfPlayers(option);
             break;
 
         case 2:
-            selectNumbOfPlayers();
+            selectNumbOfPlayers(option);
             break;
 
         case 3:
@@ -115,7 +117,7 @@ void modeOptions()
     printf("\n2. 1 player (You vs AI)\n");
     printf("\n3. Return back\n\n");
 }
-void selectNumbOfPlayers()
+void selectNumbOfPlayers(int choice)
 {
     bool back = false;
     int option;
@@ -128,12 +130,12 @@ void selectNumbOfPlayers()
         {
         case 1:
             print2PlayerModeInfo();
-            // function for starting the game
+            chessGameGo(choice);
             break;
 
         case 2:
             print1PlayerModeInfo();
-            // function for starting the game
+            chessGameGo(choice);
             break;
 
         case 3:
@@ -158,6 +160,7 @@ void confirm()
 {
     printf("Press any key to continue");
     getch();
+    printf("\n\n\n");
 }
 
 void print2PlayerModeInfo()
@@ -177,6 +180,32 @@ void player1()
 
 void player2()
 {
+}
+void chessGameGo(int chessMode)
+{
+    /*char command[15];
+    do
+    {
+        readString(command, 15);
+    } while (strcmp(command, "quit") == 0 || strcmp(command, "Quit") == 0);*/
+    char chessBoard[8][8];
+    initChessBoard(chessBoard);
+    printBoard(chessBoard);
+}
+
+void readString(char array[], int size)
+{
+    fgets(array, size, stdin);
+    int length = strlen(array);
+
+    if (array[length - 1] == '\n')
+    {
+        array[length - 1] = '\0';
+    }
+    else
+    {
+        clear_buffer();
+    }
 }
 
 int main(void)

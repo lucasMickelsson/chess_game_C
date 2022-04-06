@@ -47,6 +47,8 @@ void initChessBoard(char board[8][8])
 void printBoard(char board[8][8])
 {
     char pieceId;
+    printChessBoardLines();
+    printf("\n");
     for (int i = 7; i >= 0; i--)
     {
         printf("%d|", i + 1);
@@ -144,7 +146,7 @@ void printPieceStrings(char pieceId)
 }
 void printChessBoardLines()
 {
-    for (int i = 0; i < 65; i++)
+    for (int i = 0; i < 66; i++)
     {
         printf("-");
     }

@@ -12,10 +12,12 @@ void printWelcomeMessage(void);
 void printStart(void);
 void printMenyOptions();
 void clear_buffer();
-void selectNumbOfPlayers();
+void selectNumbOfPlayers(int choice);
 void modeOptions(void);
 void print1PlayerModeInfo();
 void print2PlayerModeInfo();
 void confirm();
+void chessGameGo(int chessMode);
+void readString(char array[], int size);
 
 #endif
