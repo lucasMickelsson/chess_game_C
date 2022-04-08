@@ -96,7 +96,7 @@ void handleChessOptions()
             break;
 
         case 2:
-            selectNumbOfPlayers(option);
+            // selectNumbOfPlayers(option);
             break;
 
         case 3:
@@ -135,7 +135,7 @@ void selectNumbOfPlayers(int choice)
 
         case 2:
             print1PlayerModeInfo();
-            chessGameGo(choice);
+            // chessGameGo(choice);
             break;
 
         case 3:
@@ -183,13 +183,13 @@ void player2()
 }
 void chessGameGo(int chessMode)
 {
-    char chessBoard[8][8], command[15];
+    char chessBoard[8][8], command[10];
     initChessBoard(chessBoard);
-    printBoard(chessBoard);
     bool go = true;
     while (go)
     {
-        readString(command, 15);
+        printBoard(chessBoard);
+        readString(command, 10);
         printf("%s\n", command);
         if (strcmp(command, "quit") == 0)
         {
@@ -200,7 +200,7 @@ void chessGameGo(int chessMode)
 
 void readString(char array[], int size)
 {
-    printf("\n\nEnter a string: ");
+    printf("\nEnter a string: ");
     fgets(array, size, stdin);
     int length = strlen(array);
 
