@@ -183,22 +183,24 @@ void player1(char board[8][8])
 
     readString(command, 10);
 
-    return command;
+    if (strcmp(command, "quit") == 0)
+    {
+        printf("You choosed to quit the game\n");
+    }
 }
 
 void player2(char board[8][8])
 {
     char command[10];
-    bool exit = false;
     printf("\nPlayer 2 Turn:\n");
 
     printf("Enter the chess move to bee done(squareToStart squareToEnd): ");
 
     readString(command, 10);
 
-    if (strcmp(command, "quit") != 0)
+    if (strcmp(command, "quit") == 0)
     {
-        return;
+        printf("You choosed to quit the game\n");
     }
 }
 void chessGameGo(int chessMode)
@@ -206,14 +208,12 @@ void chessGameGo(int chessMode)
     char chessBoard[8][8];
     initChessBoard(chessBoard);
     bool go = false;
-    while (go)
-    {
-        printBoard(chessBoard);
-        player1(chessBoard);
-        printBoard(chessBoard);
-        player2(chessBoard);
-        printBoard(chessBoard);
-    }
+
+    printBoard(chessBoard);
+    player1(chessBoard);
+    printBoard(chessBoard);
+    player2(chessBoard);
+    printBoard(chessBoard);
 }
 
 void readString(char array[], int size)
