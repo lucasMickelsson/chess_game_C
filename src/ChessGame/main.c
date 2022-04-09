@@ -174,33 +174,50 @@ void print2PlayerModeInfo()
     clear_buffer();
 }
 
-void player1()
+void player1(char board[8][8])
 {
+    char command[10];
+    printf("\nPlayer 1 Turn:\n");
+
+    printf("Enter the chess move to bee done(squareToStart squareToEnd): ");
+
+    readString(command, 10);
+
+    return command;
 }
 
-void player2()
+void player2(char board[8][8])
 {
+    char command[10];
+    bool exit = false;
+    printf("\nPlayer 2 Turn:\n");
+
+    printf("Enter the chess move to bee done(squareToStart squareToEnd): ");
+
+    readString(command, 10);
+
+    if (strcmp(command, "quit") != 0)
+    {
+        return;
+    }
 }
 void chessGameGo(int chessMode)
 {
-    char chessBoard[8][8], command[10];
+    char chessBoard[8][8];
     initChessBoard(chessBoard);
-    bool go = true;
+    bool go = false;
     while (go)
     {
         printBoard(chessBoard);
-        readString(command, 10);
-        printf("%s\n", command);
-        if (strcmp(command, "quit") == 0)
-        {
-            go = false;
-        }
+        player1(chessBoard);
+        printBoard(chessBoard);
+        player2(chessBoard);
+        printBoard(chessBoard);
     }
 }
 
 void readString(char array[], int size)
 {
-    printf("\nEnter a string: ");
     fgets(array, size, stdin);
     int length = strlen(array);
 

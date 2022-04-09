@@ -19,7 +19,7 @@ void print2PlayerModeInfo();
 void confirm();
 void chessGameGo(int chessMode);
 void readString(char array[], int size);
-char *namePlayer1();
-char *namePlayer2();
+void player1(char board[8][8]);
+void player2(char board[8][8]);
 
 #endif
