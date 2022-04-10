@@ -19,7 +19,8 @@ void print2PlayerModeInfo();
 void confirm();
 void chessGameGo(int chessMode);
 void readString(char array[], int size);
-void player1(char board[8][8]);
-void player2(char board[8][8]);
+char *player1(char board[8][8]);
+char *player2(char board[8][8]);
+bool equalStrings(char *string1, char *string2);
 
 #endif

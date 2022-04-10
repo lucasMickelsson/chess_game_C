@@ -174,7 +174,7 @@ void print2PlayerModeInfo()
     clear_buffer();
 }
 
-void player1(char board[8][8])
+char *player1(char board[8][8])
 {
     char command[10];
     printf("\nPlayer 1 Turn:\n");
@@ -185,11 +185,13 @@ void player1(char board[8][8])
 
     if (strcmp(command, "quit") == 0)
     {
-        printf("You choosed to quit the game\n");
+        return "quit";
     }
+    else
+        return "Valid move";
 }
 
-void player2(char board[8][8])
+char *player2(char board[8][8])
 {
     char command[10];
     printf("\nPlayer 2 Turn:\n");
@@ -200,20 +202,47 @@ void player2(char board[8][8])
 
     if (strcmp(command, "quit") == 0)
     {
-        printf("You choosed to quit the game\n");
+        return "quit";
+    }
+    else
+        return "Valid move";
+}
+bool equalStrings(char *string1, char *string2)
+{
+    if (strcmp(string1, string2) == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
+
 void chessGameGo(int chessMode)
 {
     char chessBoard[8][8];
     initChessBoard(chessBoard);
-    bool go = false;
-
-    printBoard(chessBoard);
-    player1(chessBoard);
-    printBoard(chessBoard);
-    player2(chessBoard);
-    printBoard(chessBoard);
+    bool go = true;
+    char *temp;
+    while (go)
+    {
+        printBoard(chessBoard);
+        temp = player1(chessBoard);
+        if (equalStrings(temp, "quit"))
+        {
+            printf("Player 1 choosed to end the game\n\n");
+            break;
+        }
+        printBoard(chessBoard);
+        temp = player2(chessBoard);
+        if (equalStrings(temp, "quit"))
+        {
+            printf("Player 2 choosed to end the game\n\n");
+            break;
+        }
+        printBoard(chessBoard);
+    }
 }
 
 void readString(char array[], int size)
