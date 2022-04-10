@@ -151,3 +151,9 @@ void printChessBoardLines()
         printf("-");
     }
 }
+void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol)
+{
+    char temp = board[oldRow][oldCol];
+    board[oldRow][oldCol] = board[newRow][newCol];
+    board[newRow][newCol] = temp;
+}
