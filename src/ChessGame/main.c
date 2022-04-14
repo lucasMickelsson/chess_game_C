@@ -188,47 +188,83 @@ void print2PlayerModeInfo()
 int player1(char board[8][8])
 {
     char command[10];
+    bool validMove = false;
     char *piece, *start;
     printf("\nPlayer 1 Turn:\n");
 
     printf("Enter the white piece to move: ");
     // here we have to add functions for checking input
+    do
+    {
+        readString(command, 10);
+        if (equalStrings(command, "quit"))
+        {
+            break;
+        }
 
-    readString(command, 10);
+        piece = strtok(command, " ");
+        start = strtok(NULL, " ");
 
-    piece = strtok(command, " ");
-    start = strtok(NULL, " ");
+        if (piece == NULL || start == NULL)
+        {
+            printf("Invalid input for chess move try again: ");
+        }
+        else
+        {
+            validMove = true;
+        }
+    } while (!validMove);
 
-    if (equalStrings(piece, "quit") || equalStrings(start, "quit"))
+    if (equalStrings(command, "quit"))
     {
         return -1;
     }
-    else if (piece == NULL || start == NULL)
-    {
-        printf("Invalid input\n");
-        return false;
-    }
     else
+    {
         return true;
+    }
 }
 
 int player2(char board[8][8])
 {
     char command[10];
+    char *piece, *start;
+    bool validMove = false;
     printf("\nPlayer 2 Turn:\n");
 
     printf("Enter the black piece to move: ");
 
     // here we have to add functions for checking input
 
-    readString(command, 10);
+    do
+    {
+        readString(command, 10);
+        if (equalStrings(command, "quit"))
+        {
+            break;
+        }
 
-    if (strcmp(command, "quit") == 0)
+        piece = strtok(command, " ");
+        start = strtok(NULL, " ");
+
+        if (piece == NULL || start == NULL)
+        {
+            printf("Invalid input for chess move try again: ");
+        }
+        else
+        {
+            validMove = true;
+        }
+    } while (!validMove);
+
+    if (equalStrings(command, "quit"))
     {
         return -1;
     }
     else
+    {
         return true;
+    }
 }
 bool equalStrings(char *string1, char *string2)
 {
@@ -264,7 +300,6 @@ void chessGameGo(int chessMode)
             printf("Player 2 choosed to end the game\n\n");
             break;
         }
-        printBoard(chessBoard);
     }
 }
 
