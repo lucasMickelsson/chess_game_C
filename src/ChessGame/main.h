@@ -1,5 +1,6 @@
 #ifndef MAINH
 #define MAINH
+#include <stdbool.h>
 
 void printLines(void);
 void clear_buffer();

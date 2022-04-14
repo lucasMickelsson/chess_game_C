@@ -155,13 +155,10 @@ void selectNumbOfPlayers(int choice)
 void print1PlayerModeInfo()
 {
     clearScreen();
-    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceId piecePosition\n");
-    printf("Id for white pieces: Pawn=1 Tower=2 Horse=3 Bishop=4 Queen=5 King=6\n");
-    printf("Then you enter endposition for the piece, for example to move a King, you would enter: B2\n");
-    printf("One of you plays as white an the other one as black\n");
-    printf("enter 'exit' to leave the mode while playing\n\n");
+    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
+    printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("you will play as white while the AI plays as black.\n");
-    printf("enter 'exit' to leave the mode while playing\n\n");
+    printf("enter 'quit' to leave the mode while playing\n\n");
     confirm();
     clear_buffer();
 }
@@ -175,12 +172,10 @@ void confirm()
 void print2PlayerModeInfo()
 {
     clearScreen();
-    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceId piecePosition\n");
-    printf("Id for white pieces: Pawn=1 Tower=2 Horse=3 Bishop=4 Queen=5 King=6\n");
-    printf("Id for black pieces: Pawn=51 Tower=52 Horse=53 Bishop=54 Queen=55 King=56\n");
-    printf("Then you enter endposition for the piece, for example to move a King, you would enter: B2\n");
+    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
+    printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
-    printf("enter 'exit' to leave the mode while playing\n\n");
+    printf("enter 'quit' to leave the mode while playing\n\n");
     confirm();
     clear_buffer();
 }
@@ -189,7 +184,7 @@ int player1(char board[8][8])
 {
     char command[10];
     bool validMove = false;
-    char *piece, *start;
+    char *end, *start;
     printf("\nPlayer 1 Turn:\n");
 
     printf("Enter the white piece to move: ");
@@ -202,16 +197,20 @@ int player1(char board[8][8])
             break;
         }
 
-        piece = strtok(command, " ");
-        start = strtok(NULL, " ");
+        start = strtok(command, " ");
+        end = strtok(NULL, " ");
 
-        if (piece == NULL || start == NULL)
+        if (start == NULL || end == NULL)
         {
             printf("Invalid input for chess move try again: ");
         }
-        else
+        else if (positionStrings(start) && positionStrings(end))
         {
             validMove = true;
+        }
+        else
+        {
+            printf("Not a valid command: ");
         }
     } while (!validMove);
 
@@ -228,7 +227,7 @@ int player1(char board[8][8])
 int player2(char board[8][8])
 {
     char command[10];
-    char *piece, *start;
+    char *end, *start;
     bool validMove = false;
     printf("\nPlayer 2 Turn:\n");
 
@@ -244,16 +243,20 @@ int player2(char board[8][8])
             break;
         }
 
-        piece = strtok(command, " ");
-        start = strtok(NULL, " ");
+        start = strtok(command, " ");
+        end = strtok(NULL, " ");
 
-        if (piece == NULL || start == NULL)
+        if (start == NULL || end == NULL)
         {
             printf("Invalid input for chess move try again: ");
         }
-        else
+        else if (positionStrings(start) && positionStrings(end))
         {
             validMove = true;
+        }
+        else
+        {
+            printf("Not a valid command: ");
         }
     } while (!validMove);
 

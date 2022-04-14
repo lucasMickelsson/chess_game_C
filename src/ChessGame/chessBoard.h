@@ -1,5 +1,6 @@
 #ifndef CHESSBOARDH
 #define CHESSBOARDH
+#include <stdbool.h>
 
 // every chess piece has been given an unique id
 // black pieces will have id defined= pieceID + 50
@@ -28,5 +29,6 @@ char getPieceAtPosition(char board[8][8], int row, int col);
 void printPieceStrings(char pieceId);
 void printChessBoardLines();
 void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol);
+bool positionStrings(char *chessMove);
 
 #endif
