@@ -181,64 +181,29 @@ bool positionStrings(char *chessMove)
     return false;
 }
 
-struct chessCoord getChessCoords(char *string1)
+struct chessCoord getChessCoordsIn(char *string1)
 {
     struct chessCoord cord;
-    char letter;
-    int number;
+    char *cheesCoordinates[8][8] = {{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"},
+                                    {"B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"},
+                                    {"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"},
+                                    {"D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"},
+                                    {"E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8"},
+                                    {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"},
+                                    {"G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8"},
+                                    {"H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8"}};
 
-    for (int i = 0; string1[i] != '\0'; i++)
+    for (int i = 0; i < 8; i++)
     {
-        if (isupper(string1[i]))
+        for (int j = 0; j < 8; j++)
         {
-            letter = string1[i];
-        }
-        else if (isalnum(string1[i]))
-        {
-            number = atoi(string1);
+            if (strcmp(string1, cheesCoordinates[i][j]) == 0)
+            {
+                cord.row = i;
+                cord.col = j;
+            }
         }
     }
-    switch (letter)
-    {
-    case 'A':
-        cord.row = 0;
-        cord.col = number;
-        break;
 
-    case 'B':
-        cord.row = 1;
-        cord.col = number;
-        break;
-
-    case 'C':
-        cord.row = 2;
-        cord.col = number;
-        break;
-
-    case 'D':
-        cord.row = 3;
-        cord.col = number;
-        break;
-
-    case 'E':
-        cord.row = 4;
-        cord.col = number;
-        break;
-
-    case 'F':
-        cord.row = 5;
-        cord.col = number;
-        break;
-
-    case 'G':
-        cord.row = 6;
-        cord.col = number;
-        break;
-
-    case 'H':
-        cord.row = 7;
-        cord.col = number;
-        break;
-    }
     return cord;
 }

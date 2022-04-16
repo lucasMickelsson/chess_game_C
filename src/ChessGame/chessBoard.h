@@ -36,6 +36,5 @@ void printPieceStrings(char pieceId);
 void printChessBoardLines();
 void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol);
 bool positionStrings(char *chessMove);
-struct chessCoord getChessCoords(char *string1);
-
+struct chessCoord getChessCoordsIn(char *string1);
 #endif
