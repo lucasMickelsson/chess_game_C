@@ -15,6 +15,12 @@
 #define QUEEN 5
 #define KING 6
 
+struct chessCoord
+{
+    int row;
+    int col;
+};
+
 /**
  * Function for building and initialize every position to a piece
  */
@@ -30,5 +36,6 @@ void printPieceStrings(char pieceId);
 void printChessBoardLines();
 void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol);
 bool positionStrings(char *chessMove);
+struct chessCoord getChessCoords(char *string1);
 
 #endif

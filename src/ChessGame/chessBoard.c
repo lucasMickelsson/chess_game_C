@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "chessBoard.h"
 
 // char board[8][8];
@@ -161,7 +162,6 @@ void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCo
 }
 bool positionStrings(char *chessMove)
 {
-    char *string;
     char *cheesCoord[] = {"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8",
                           "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8",
                           "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8",
@@ -179,4 +179,66 @@ bool positionStrings(char *chessMove)
         }
     }
     return false;
+}
+
+struct chessCoord getChessCoords(char *string1)
+{
+    struct chessCoord cord;
+    char letter;
+    int number;
+
+    for (int i = 0; string1[i] != '\0'; i++)
+    {
+        if (isupper(string1[i]))
+        {
+            letter = string1[i];
+        }
+        else if (isalnum(string1[i]))
+        {
+            number = atoi(string1);
+        }
+    }
+    switch (letter)
+    {
+    case 'A':
+        cord.row = 0;
+        cord.col = number;
+        break;
+
+    case 'B':
+        cord.row = 1;
+        cord.col = number;
+        break;
+
+    case 'C':
+        cord.row = 2;
+        cord.col = number;
+        break;
+
+    case 'D':
+        cord.row = 3;
+        cord.col = number;
+        break;
+
+    case 'E':
+        cord.row = 4;
+        cord.col = number;
+        break;
+
+    case 'F':
+        cord.row = 5;
+        cord.col = number;
+        break;
+
+    case 'G':
+        cord.row = 6;
+        cord.col = number;
+        break;
+
+    case 'H':
+        cord.row = 7;
+        cord.col = number;
+        break;
+    }
+    return cord;
 }
