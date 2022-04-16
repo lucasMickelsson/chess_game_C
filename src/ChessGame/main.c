@@ -185,6 +185,7 @@ int player1(char board[8][8])
     char command[10];
     bool validMove = false;
     char *end, *start;
+    struct Coord p1, p2;
     printf("\nPlayer 1 Turn:\n");
 
     printf("Enter the white piece to move: ");
@@ -206,6 +207,8 @@ int player1(char board[8][8])
         }
         else if (positionStrings(start) && positionStrings(end))
         {
+            p1 = getCoords(start);
+            p2 = getCoords(end);
             validMove = true;
         }
         else

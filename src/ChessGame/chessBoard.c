@@ -181,9 +181,9 @@ bool positionStrings(char *chessMove)
     return false;
 }
 
-struct chessCoord getChessCoordsIn(char *string1)
+struct Coord getCoords(char *string1)
 {
-    struct chessCoord cord;
+    struct Coord cord;
     char *cheesCoordinates[8][8] = {{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"},
                                     {"B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"},
                                     {"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"},

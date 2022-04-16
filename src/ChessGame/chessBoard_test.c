@@ -33,12 +33,16 @@ int main(void)
     printBoard(board);
 
     TEST_CASE("Ge coords for a chessboard via chess move");
-    struct chessCoord test;
+    struct Coord test;
     char *string1 = "A8";
-    test = getChessCoordsIn(string1);
-    printf("Chess coords are %d %c\n", test.row, test.col);
+    test = getCoords(string1);
+    printf("Chess coords are %d %d\n", test.row, test.col);
 
     string1 = "B3";
-    test = getChessCoordsIn(string1);
-    printf("Chess coords are %d %c", test.row, test.col);
+    test = getCoords(string1);
+    printf("Chess coords are %d %d\n", test.row, test.col);
+
+    string1 = "D6";
+    test = getCoords(string1);
+    printf("Chess coords are %d %d\n", test.row, test.col);
 }
