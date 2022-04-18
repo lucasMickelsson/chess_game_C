@@ -5,14 +5,12 @@
 #include <ctype.h>
 #include "chessBoard.h"
 
-// char board[8][8];
-
 int pawnBlackStatus[8] = {0};
 int pawnWhiteStatus[8] = {0};
 
 void initChessBoard(char board[8][8])
 {
-
+    // Init the white pieces
     board[0][0] = TOWER;
     board[0][1] = HORSE;
     board[0][2] = BISHOP;
@@ -24,20 +22,20 @@ void initChessBoard(char board[8][8])
 
     for (int i = 0, x = 0; i < 8; i++, x++)
     {
-        board[1][x] = PAWN;
+        board[1][x] = PAWN; // White pawns
     }
     for (int y = 2; y < 6; y++)
     {
         for (int x = 0; x < 8; x++)
         {
-            board[y][x] = EMPTY;
+            board[y][x] = EMPTY; // all empty squares
         }
     }
     for (int i = 0, x = 0; i < 8; i++, x++)
     {
-        board[6][x] = PAWN + BLACK;
+        board[6][x] = PAWN + BLACK; // black pawns
     }
-
+    // The rest of the black pieces
     board[7][0] = TOWER + BLACK;
     board[7][1] = HORSE + BLACK;
     board[7][2] = BISHOP + BLACK;
@@ -57,8 +55,8 @@ void printBoard(char board[8][8])
         printf("%d|", i + 1);
         for (int j = 0; j < 8; j++)
         {
-            pieceId = getPieceAtPosition(board, i, j);
-            printPieceStrings(pieceId);
+            pieceId = getPieceAtPosition(board, i, j); // get the id for the specific position on the board
+            printPieceStrings(pieceId);                // print the piece string on the board
             if (j < 8)
             {
                 printf("|");
@@ -78,18 +76,18 @@ char getPieceAtPosition(char board[8][8], int row, int col)
     }
     else
     {
-        return -1;
+        return -1; // if its illegal input -1 will be returned
     }
 }
 void printPieceStrings(char pieceId)
 {
     if (pieceId == EMPTY)
     {
-        printf("       ");
+        printf("       "); // Empty square
     }
     else if (pieceId > BLACK)
     {
-        pieceId = pieceId - BLACK;
+        pieceId = pieceId - BLACK; // get id for the black piece
         switch (pieceId)
         {
         case PAWN:
@@ -119,7 +117,7 @@ void printPieceStrings(char pieceId)
     }
     else
     {
-        switch (pieceId)
+        switch (pieceId) // in this case its a white piece
         {
         case PAWN:
             printf(" wPawn ");
@@ -183,7 +181,7 @@ bool positionStrings(char *chessMove)
 
 struct Coord getCoords(char *string1)
 {
-    struct Coord cord;
+    struct Coord cord; // we want to return 2 values for chess coordinates therefore we use a struct
     char *cheesCoordinates[8][8] = {{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"},
                                     {"B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"},
                                     {"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"},
