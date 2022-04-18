@@ -209,6 +209,7 @@ int player1(char board[8][8])
         {
             p1 = getCoords(start);
             p2 = getCoords(end);
+            char startPosition = getPieceAtPosition(board, p1.row, p1.col);
             validMove = true;
         }
         else
@@ -223,7 +224,7 @@ int player1(char board[8][8])
     }
     else
     {
-        return true;
+        return 1;
     }
 }
 
