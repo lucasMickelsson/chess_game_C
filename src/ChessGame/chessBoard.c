@@ -5,9 +5,6 @@
 #include <ctype.h>
 #include "chessBoard.h"
 
-int pawnBlackStatus[8] = {0};
-int pawnWhiteStatus[8] = {0};
-
 void initChessBoard(char board[8][8])
 {
     // Init the white pieces
@@ -204,4 +201,15 @@ struct Coord getCoords(char *string1)
     }
 
     return cord;
+}
+bool isWhite(char pieceId)
+{
+    if (!(pieceId > BLACK || pieceId == EMPTY))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

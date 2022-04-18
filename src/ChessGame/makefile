@@ -1,6 +1,6 @@
 # compile flag
 CFLAGS = -Wall -pedantic -g
-OBJ= main.o chessBoard.o
+OBJ= main.o chessBoard.o piece_functions.o
 
 # operating system dependent variables
 ifeq ($(OS), Windows_NT)
@@ -15,19 +15,24 @@ endif
 
 # Main targets
 
+piece_functions.o: piece_functions.c piece_functions.h chessBoard.h
+	gcc $(CFLAGS) -c piece_functions.c -o piece_functions.o
+
 chessBoard.o: chessBoard.c chessBoard.h
 	gcc $(CFLAGS) -c chessBoard.c -o chessBoard.o
 
-main.o: main.c main.h chessBoard.h
+main.o: main.c main.h chessBoard.h piece_functions.h
 	gcc $(CFLAGS) -c main.c -o main.o
 
-chess$(EXEEXT): main.o chessBoard.o
+chess$(EXEEXT): main.o chessBoard.o piece_functions.o
 	gcc $(CFLAGS) $(OBJ) -o chess
 
 chess: chess$(EXEEXT)
 
 all: chess$(EXEEXT) chessBoard_test$(EXEEXT) listTest$(EXEEXT)
 
+clean:
+	$(RM) $(BIN) $(OBJ) $(TESTOBJ)
 # Test targets
 
 listTest$(EXEEXT): pieces_list.c pieces_list.h listTest.c chessBoard.h

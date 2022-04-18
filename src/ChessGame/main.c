@@ -5,6 +5,7 @@
 #include <string.h>
 #include "chessBoard.h"
 #include "main.h"
+#include "piece_functions.h"
 
 void printLines(void)
 {

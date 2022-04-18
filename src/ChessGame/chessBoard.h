@@ -77,4 +77,6 @@ bool positionStrings(char *chessMove);
  * @return struct with 2 integer for col and row
  */
 struct Coord getCoords(char *string1);
+
+bool isWhite(char pieceId);
 #endif
