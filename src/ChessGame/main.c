@@ -218,7 +218,10 @@ int player1(char board[8][8])
             {
                 printf("The chess move is invalid, try again: ");
             }
-            // validMove = true;
+            else
+            {
+                changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+            }
         }
         else
         {
