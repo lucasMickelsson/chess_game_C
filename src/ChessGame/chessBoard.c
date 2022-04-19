@@ -176,9 +176,9 @@ bool positionStrings(char *chessMove)
     return false;
 }
 
-struct Coord getCoords(char *string1)
+struct coord getCoords(char *string1)
 {
-    struct Coord cord; // we want to return 2 values for chess coordinates therefore we use a struct
+    struct coord cord; // we want to return 2 values for chess coordinates therefore we use a struct
     char *cheesCoordinates[8][8] = {{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"},
                                     {"B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"},
                                     {"C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"},
@@ -194,8 +194,8 @@ struct Coord getCoords(char *string1)
         {
             if (strcmp(string1, cheesCoordinates[i][j]) == 0)
             {
-                cord.row = i;
-                cord.col = j;
+                cord.row = j;
+                cord.col = i;
             }
         }
     }

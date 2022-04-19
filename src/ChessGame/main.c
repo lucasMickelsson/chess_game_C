@@ -186,7 +186,7 @@ int player1(char board[8][8])
     char command[10];
     bool validMove = false;
     char *end, *start;
-    struct Coord p1, p2;
+    struct coord p1, p2;
     printf("\nPlayer 1 Turn:\n");
 
     printf("Enter the white piece to move: ");
@@ -210,8 +210,15 @@ int player1(char board[8][8])
         {
             p1 = getCoords(start);
             p2 = getCoords(end);
-            char startPosition = getPieceAtPosition(board, p1.row, p1.col);
-            validMove = true;
+            // printf("Coors are %d %d\n", p1.row, p1.col);
+            char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
+            // printf("Its a %d and board %d\n", pieceStart, board[7][6]);
+            validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+            if (!validMove)
+            {
+                printf("The chess move is invalid, try again: ");
+            }
+            // validMove = true;
         }
         else
         {

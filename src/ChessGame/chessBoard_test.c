@@ -33,7 +33,7 @@ int main(void)
     printBoard(board);
 
     TEST_CASE("Ge coords for a chessboard via chess move");
-    struct Coord test;
+    struct coord test;
     char *string1 = "A8";
     test = getCoords(string1);
     printf("Chess coords are %d %d\n", test.row, test.col);
@@ -45,4 +45,10 @@ int main(void)
     string1 = "D6";
     test = getCoords(string1);
     printf("Chess coords are %d %d\n", test.row, test.col);
+
+    TEST_CASE("Checking if a piece is a white one or not");
+    VERIFY(isWhite(PAWN), "Its a white pawn");
+    VERIFY(!isWhite(PAWN + BLACK), "Its not a white pawn");
+    VERIFY(isWhite(QUEEN), "Its a white queen");
+    VERIFY(!isWhite(EMPTY), "Its not a white piece");
 }

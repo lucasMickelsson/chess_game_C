@@ -15,7 +15,7 @@
 #define QUEEN 5
 #define KING 6
 
-struct Coord
+struct coord
 {
     int row;
     int col;
@@ -76,7 +76,7 @@ bool positionStrings(char *chessMove);
  * @param string1 the chessmove example B2 A4 B6
  * @return struct with 2 integer for col and row
  */
-struct Coord getCoords(char *string1);
+struct coord getCoords(char *string1);
 
 bool isWhite(char pieceId);
 #endif

@@ -5,55 +5,64 @@
 int pawnBlackStatus[8] = {0};
 int pawnWhiteStatus[8] = {0};
 
-bool validMoves(char board[8][8], char piece, int row, int col)
+bool validMoves(char board[8][8], char piece, int startRow, int startCol, int moveRow, int moveCol)
 {
-    bool isValidMove;
+    bool isValidMove = true;
     if (piece > BLACK)
     {
+        // printf("Its a black piece\n");
         piece = piece - BLACK;
-        isValidMove = handlePieceFunctions(piece);
+        switch (piece)
+        {
+        case PAWN:
+            /* Function for pawn here */
+            break;
+        case HORSE:
+            /* Function for horse here */
+            break;
+        case QUEEN:
+            /* Function for queen here */
+            break;
+        case KING:
+            /* Function for king here */
+            break;
+        case BISHOP:
+            /* Function for bishop here */
+            break;
+        case TOWER:
+            /* Function for tower here */
+            break;
+        }
     }
     else if (isWhite(piece))
     {
-        isValidMove = handlePieceFunctions(piece);
+        // printf("Its a white piece\n");
+        switch (piece)
+        {
+        case PAWN:
+            /* Function for pawn here */
+            break;
+        case HORSE:
+            /* Function for horse here */
+            break;
+        case QUEEN:
+            /* Function for queen here */
+            break;
+        case KING:
+            /* Function for king here */
+            break;
+        case BISHOP:
+            /* Function for bishop here */
+            break;
+        case TOWER:
+            /* Function for tower here */
+            break;
+        }
     }
     else
     {
-        printf("That is not a piece\n");
+        // printf("Its a non piece\n");
         return false;
     }
-}
-bool handlePieceFunctions(char pieceId)
-{
-    switch (pieceId)
-    {
-    case PAWN:
-        /* Function for pawn here */
-        break;
-
-    case HORSE:
-        /* Function for horse here */
-        break;
-
-    case QUEEN:
-        /* Function for queen here */
-        break;
-
-    case KING:
-        /* Function for king here */
-        break;
-
-    case BISHOP:
-        /* Function for bishop here */
-        break;
-
-    case TOWER:
-        /* Function for tower here */
-        break;
-
-    default:
-        printf("Not a chess piece\n");
-        return false;
-        break;
-    }
+    return isValidMove;
 }
