@@ -208,19 +208,26 @@ int player1(char board[8][8])
         }
         else if (positionStrings(start) && positionStrings(end))
         {
-            p1 = getCoords(start);
-            p2 = getCoords(end);
+            p1 = getChessIndex(start);
+            p2 = getChessIndex(end);
             // printf("Coors are %d %d\n", p1.row, p1.col);
             char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
-            // printf("Its a %d and board %d\n", pieceStart, board[7][6]);
-            validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+            validMove = isWhite(pieceStart);
             if (!validMove)
             {
-                printf("The chess move is invalid, try again: ");
+                printf("Not a valid piece for player 1, should use white players: ");
             }
             else
             {
-                changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!validMove)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                }
             }
         }
         else

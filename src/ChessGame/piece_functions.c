@@ -91,12 +91,22 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
     if (pawnWhiteStatus[col] == 1) // if the pawn is in the start position
     {
         if (board[row + 2][col] == EMPTY &&
-            board[row + 2][col] == board[moveRow][moveCol]) // you can move to it 2 steps forward
+            row + 2 == moveRow && col == moveCol) // you can move to it 2 steps forward
         {
             valid = true;
         }
-        if (board[row + 1][col] == EMPTY &&
-            board[row + 1][col] == board[moveRow][moveCol]) // you can move to it 1 step otherwise
+        else if (board[row + 1][col] == EMPTY &&
+                 row + 1 == moveRow && col == moveCol) // you can move to it 1 step otherwise
+        {
+            valid = true;
+        }
+        else if (checkForBlackPiece(board, row + 1, col + 1) &&
+                 row + 1 == moveRow && col + 1 == moveCol) // you can knock a black piece out diagonally right
+        {
+            valid = true;
+        }
+        else if (checkForBlackPiece(board, row + 1, col - 1) &&
+                 row + 1 == moveRow && col - 1 == moveCol) // also diagonally left
         {
             valid = true;
         }
@@ -108,17 +118,17 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
     else
     {
         if (board[row + 1][col] == EMPTY &&
-            board[row + 1][col] == board[moveRow][moveCol])
+            row + 1 == moveRow && col == moveCol)
         {
             valid = true;
         }
-        if (checkForBlackPiece(board, row + 1, col + 1) &&
-            board[row + 1][col + 1] == board[moveRow][moveCol]) // you can knock a black piece out diagonally right
+        else if (checkForBlackPiece(board, row + 1, col + 1) &&
+                 row + 1 == moveRow && col + 1 == moveCol) // you can knock a black piece out diagonally right
         {
             valid = true;
         }
-        if (checkForBlackPiece(board, row + 1, col - 1) &&
-            board[row + 1][col - 1] == board[moveRow][moveCol]) // also diagonally left
+        else if (checkForBlackPiece(board, row + 1, col - 1) &&
+                 row + 1 == moveRow && col - 1 == moveCol) // also diagonally left
         {
             valid = true;
         }

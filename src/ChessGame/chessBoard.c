@@ -151,6 +151,12 @@ void printChessBoardLines()
 }
 void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol)
 {
+    char pieceCheck = getPieceAtPosition(board, newRow, newCol);
+
+    if (pieceCheck != EMPTY) // if we are going to knock a piece out we need to set the position to empty before we swap
+    {
+        setPieceAtPosition(board, EMPTY, newRow, newCol);
+    }
     char temp = board[oldRow][oldCol];
     board[oldRow][oldCol] = board[newRow][newCol];
     board[newRow][newCol] = temp;
@@ -176,7 +182,7 @@ bool positionStrings(char *chessMove)
     return false;
 }
 
-struct coord getCoords(char *string1)
+struct coord getChessIndex(char *string1)
 {
     struct coord cord; // we want to return 2 values for chess coordinates therefore we use a struct
     char *cheesCoordinates[8][8] = {{"A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"},
@@ -212,4 +218,8 @@ bool isWhite(char pieceId)
     {
         return false;
     }
+}
+void setPieceAtPosition(char board[8][8], char pieceId, int row, int col)
+{
+    board[row][col] = pieceId;
 }

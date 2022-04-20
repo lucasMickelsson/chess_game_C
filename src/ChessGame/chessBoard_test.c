@@ -35,15 +35,15 @@ int main(void)
     TEST_CASE("Ge coords for a chessboard via chess move");
     struct coord test;
     char *string1 = "A8";
-    test = getCoords(string1);
+    test = getChessIndex(string1);
     printf("Chess coords are %d %d\n", test.row, test.col);
 
     string1 = "B3";
-    test = getCoords(string1);
+    test = getChessIndex(string1);
     printf("Chess coords are %d %d\n", test.row, test.col);
 
     string1 = "D6";
-    test = getCoords(string1);
+    test = getChessIndex(string1);
     printf("Chess coords are %d %d\n", test.row, test.col);
 
     TEST_CASE("Checking if a piece is a white one or not");

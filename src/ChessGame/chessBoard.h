@@ -41,6 +41,8 @@ void printBoard(char board[8][8]);
  */
 char getPieceAtPosition(char board[8][8], int row, int col);
 
+void setPieceAtPosition(char board[8][8], char pieceId, int row, int col);
+
 /**
  * Function for printing a pieceString on the board
  *
@@ -76,7 +78,7 @@ bool positionStrings(char *chessMove);
  * @param string1 the chessmove example B2 A4 B6
  * @return struct with 2 integer for col and row
  */
-struct coord getCoords(char *string1);
+struct coord getChessIndex(char *string1);
 
 bool isWhite(char pieceId);
 #endif
