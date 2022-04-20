@@ -6,6 +6,7 @@
 #include "chessBoard.h"
 #include "main.h"
 #include "piece_functions.h"
+#include "debug.h"
 
 void printLines(void)
 {
@@ -249,14 +250,12 @@ int player1(char board[8][8])
 int player2(char board[8][8])
 {
     char command[10];
-    char *end, *start;
     bool validMove = false;
+    char *end, *start;
+    struct coord p1, p2;
     printf("\nPlayer 2 Turn:\n");
 
     printf("Enter the black piece to move: ");
-
-    // here we have to add functions for checking input
-
     do
     {
         readString(command, 10);
@@ -274,7 +273,27 @@ int player2(char board[8][8])
         }
         else if (positionStrings(start) && positionStrings(end))
         {
-            validMove = true;
+
+            p1 = getChessIndex(start);
+            p2 = getChessIndex(end);
+            char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
+            validMove = isBlack(pieceStart);
+            if (!validMove)
+            {
+                printf("Not a valid piece for player 2, should use black players: ");
+            }
+            else
+            {
+                validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!validMove)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                }
+            }
         }
         else
         {
@@ -288,7 +307,7 @@ int player2(char board[8][8])
     }
     else
     {
-        return true;
+        return 1;
     }
 }
 bool equalStrings(char *string1, char *string2)

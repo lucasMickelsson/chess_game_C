@@ -219,6 +219,17 @@ bool isWhite(char pieceId)
         return false;
     }
 }
+bool isBlack(char pieceId)
+{
+    if (pieceId > BLACK)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 void setPieceAtPosition(char board[8][8], char pieceId, int row, int col)
 {
     board[row][col] = pieceId;

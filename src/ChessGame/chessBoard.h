@@ -81,4 +81,5 @@ bool positionStrings(char *chessMove);
 struct coord getChessIndex(char *string1);
 
 bool isWhite(char pieceId);
+bool isBlack(char pieceId);
 #endif
