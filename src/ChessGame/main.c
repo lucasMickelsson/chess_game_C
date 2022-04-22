@@ -205,7 +205,7 @@ int player1(char board[8][8])
 
         if (start == NULL || end == NULL)
         {
-            printf("Invalid input for chess move try again: ");
+            printf("Invalid input for chess move try again in this format(startPos endPos): ");
         }
         else if (positionStrings(start) && positionStrings(end))
         {
@@ -233,7 +233,7 @@ int player1(char board[8][8])
         }
         else
         {
-            printf("Not a valid command: ");
+            printf("Not a valid chess command try again: ");
         }
     } while (!validMove);
 
@@ -297,7 +297,7 @@ int player2(char board[8][8])
         }
         else
         {
-            printf("Not a valid command: ");
+            printf("Not a valid chess command try again: ");
         }
     } while (!validMove);
 

@@ -40,7 +40,7 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
         /* Function for bishop here */
         break;
     case TOWER:
-        /* Function for tower here */
+        isValidMove = checkTowerMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     default:
         return false;
@@ -87,7 +87,7 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
 {
     bool valid = false;
 
-    if (pawnWhiteStatus[col] == 0) // if the pawn is in the start position
+    if (pawnWhiteStatus[col] == 0) // if the pawn is at the start position
     {
         if (board[row + 2][col] == EMPTY &&
             row + 2 == moveRow && col == moveCol) // you can move to it 2 steps forward
@@ -212,6 +212,212 @@ bool checkBlackPawnMoves(char board[8][8], int row, int col, int moveRow, int mo
     {
         pawnBlackStatus[col]++;
     }
+    return valid;
+}
+bool checkTowerMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
+{
+    bool valid = true;
+    valid = horizontallyCheck(board, row, col, moveRow, moveCol);
+    if (!valid)
+    {
+        valid = verticallyCheck(board, row, col, moveRow, moveCol);
+    }
+    return valid;
+}
+bool horizontallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol)
+{
+    bool valid = true;
+    char findPiece = getPieceAtPosition(board, row, col);
+    if (isBlack(findPiece))
+    {
+        // Horizontally right check
+        for (int i = col; i + 1 <= 7; i++)
+        {
+            DEBUG("Checking down vertiaclly");
 
+            if (checkForWhitePiece(board, row, i + 1) && row == moveRow && i + 1 == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[row][i + 1] == EMPTY && row == moveRow && i + 1 == moveCol)
+            {
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        // Horizontally left check
+        for (int i = col; i - 1 >= 0; i--)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForWhitePiece(board, row, i - 1) && row == moveRow && i - 1 == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[row][i - 1] == EMPTY && row == moveRow && i - 1 == moveCol)
+            {
+                DEBUG("to an empty position hor left");
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("invalid hor left");
+                valid = false;
+            }
+        }
+    }
+    else if (isWhite(findPiece))
+    {
+        // Horizontally left check
+        for (int i = col; i + 1 <= 7; i++)
+        {
+            DEBUG("Checking down vertiaclly");
+
+            if (checkForBlackPiece(board, row, i + 1) && row == moveRow && i + 1 == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[row][i + 1] == EMPTY && row == moveRow && i + 1 == moveCol)
+            {
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        // Horizontally right check
+        for (int i = col; i - 1 >= 0; i--)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForBlackPiece(board, row, i - 1) && row == moveRow && i - 1 == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[row][i - 1] == EMPTY && row == moveRow && i - 1 == moveCol)
+            {
+                DEBUG("to an empty position hor left");
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("invalid hor left");
+                valid = false;
+            }
+        }
+    }
+    return valid;
+}
+bool verticallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol)
+{
+    bool valid = true;
+    char findPiece = getPieceAtPosition(board, row, col);
+    if (isBlack(findPiece))
+    {
+        for (int i = row; i - 1 >= 0; i--)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForWhitePiece(board, i - 1, col) && i - 1 == moveRow && col == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[i - 1][col] == EMPTY && i - 1 == moveRow && col == moveCol)
+            {
+                DEBUG("to an empty position down check");
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("Not valid down check");
+                valid = false;
+            }
+        }
+        // Vertical up check
+        for (int i = row; i + 1 <= 7; i++)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForWhitePiece(board, i + 1, col) && i + 1 == moveRow && col == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[i + 1][col] == EMPTY && i + 1 == moveRow && col == moveCol)
+            {
+                DEBUG("to an empty position vert up");
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("inavlid vert up");
+                valid = false;
+            }
+        }
+    }
+    else if (isWhite(findPiece))
+    {
+        for (int i = row; i - 1 >= 0; i--)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForBlackPiece(board, i - 1, col) && i - 1 == moveRow && col == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[i - 1][col] == EMPTY && i - 1 == moveRow && col == moveCol)
+            {
+                DEBUG("to an empty position down check");
+
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("Not valid down check");
+                valid = false;
+            }
+        }
+        // Vertical up check
+        for (int i = row; i + 1 <= 7; i++)
+        {
+            DEBUG("Checking down vertiaclly");
+            if (checkForBlackPiece(board, i + 1, col) && i + 1 == moveRow && col == moveCol)
+            {
+                DEBUG("down a white piece");
+                valid = true;
+                return valid;
+            }
+            else if (board[i + 1][col] == EMPTY && i + 1 == moveRow && col == moveCol)
+            {
+                DEBUG("to an empty position vert up");
+                valid = true;
+                return valid;
+            }
+            else
+            {
+                DEBUG("inavlid vert up");
+                valid = false;
+            }
+        }
+    }
     return valid;
 }
