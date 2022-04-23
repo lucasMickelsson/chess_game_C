@@ -88,4 +88,17 @@ bool horizontallyCheck(char board[8][8], int row, int col, int moveRow, int move
  */
 bool verticallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol);
 
+/**
+ * @brief
+ *
+ * @param board
+ * @param row
+ * @param col
+ * @param moveRow
+ * @param moveCol
+ * @return true
+ * @return false
+ */
+bool checkBishopMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
+
 #endif
