@@ -9,7 +9,6 @@ int pawnWhiteStatus[8] = {0};
 bool validMoves(char board[8][8], char piece, int startRow, int startCol, int moveRow, int moveCol)
 {
     bool isValidMove = true;
-
     if (isBlack(piece))
     {
         if (piece == PAWN + BLACK)
@@ -17,18 +16,22 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
             isValidMove = checkBlackPawnMoves(board, startRow, startCol, moveRow, moveCol);
             return isValidMove;
         }
-        else
+        else if (piece == BLACK + HORSE)
         {
-            piece = piece - BLACK;
+            isValidMove = checkBlackHorseMoves(board, startRow, startCol, moveRow, moveCol);
+            return isValidMove;
         }
+        else
+            piece = piece - BLACK;
     }
+
     switch (piece)
     {
     case PAWN:
         isValidMove = checkWhitePawnMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case HORSE:
-        /* Function for horse here */
+        isValidMove = checkWhiteHorseMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case QUEEN:
         isValidMove = checkQueenMoves(board, startRow, startCol, moveRow, moveCol);
@@ -244,6 +247,106 @@ bool checkQueenMoves(char board[8][8], int row, int col, int moveRow, int moveCo
         }
     }
     return validMoveQueen;
+}
+bool checkWhiteHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
+{
+    bool valid = false;
+
+    if ((board[row + 2][col - 1] == EMPTY && row + 2 == moveRow && col - 1 == moveCol) ||
+        (checkForBlackPiece(board, row + 2, col - 1) && row + 2 == moveRow && col - 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 1][col - 2] == EMPTY && row + 1 == moveRow && col - 2 == moveCol) ||
+             (checkForBlackPiece(board, row + 1, col - 2) && row + 1 == moveRow && col - 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 1][col - 2] == EMPTY && row - 1 == moveRow && col - 2 == moveCol) ||
+             (checkForBlackPiece(board, row - 1, col - 2) && row - 1 == moveRow && col - 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 2][col - 1] == EMPTY && row - 2 == moveRow && col - 1 == moveCol) ||
+             (checkForBlackPiece(board, row - 2, col - 1) && row - 2 == moveRow && col - 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 2][col + 1] == EMPTY && row - 2 == moveRow && col + 1 == moveCol) ||
+             (checkForBlackPiece(board, row - 2, col + 1) && row - 2 == moveRow && col + 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 1][col + 2] == EMPTY && row - 1 == moveRow && col + 2 == moveCol) ||
+             (checkForBlackPiece(board, row - 1, col + 2) && row - 1 == moveRow && col + 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 1][col + 2] == EMPTY && row + 1 == moveRow && col + 2 == moveCol) ||
+             (checkForBlackPiece(board, row + 1, col + 2) && row + 1 == moveRow && col + 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 2][col + 1] == EMPTY && row + 2 == moveRow && col + 1 == moveCol) ||
+             (checkForBlackPiece(board, row + 2, col + 1) && row + 2 == moveRow && col + 1 == moveCol))
+    {
+        valid = true;
+    }
+    else
+    {
+        valid = false;
+    }
+    return valid;
+}
+bool checkBlackHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
+{
+    bool valid = false;
+
+    if ((board[row + 2][col - 1] == EMPTY && row + 2 == moveRow && col - 1 == moveCol) ||
+        (checkForWhitePiece(board, row + 2, col - 1) && row + 2 == moveRow && col - 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 1][col - 2] == EMPTY && row + 1 == moveRow && col - 2 == moveCol) ||
+             (checkForWhitePiece(board, row + 1, col - 2) && row + 1 == moveRow && col - 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 1][col - 2] == EMPTY && row - 1 == moveRow && col - 2 == moveCol) ||
+             (checkForWhitePiece(board, row - 1, col - 2) && row - 1 == moveRow && col - 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 2][col - 1] == EMPTY && row - 2 == moveRow && col - 1 == moveCol) ||
+             (checkForWhitePiece(board, row - 2, col - 1) && row - 2 == moveRow && col - 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 2][col + 1] == EMPTY && row - 2 == moveRow && col + 1 == moveCol) ||
+             (checkForWhitePiece(board, row - 2, col + 1) && row - 2 == moveRow && col + 1 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row - 1][col + 2] == EMPTY && row - 1 == moveRow && col + 2 == moveCol) ||
+             (checkForWhitePiece(board, row - 1, col + 2) && row - 1 == moveRow && col + 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 1][col + 2] == EMPTY && row + 1 == moveRow && col + 2 == moveCol) ||
+             (checkForWhitePiece(board, row + 1, col + 2) && row + 1 == moveRow && col + 2 == moveCol))
+    {
+        valid = true;
+    }
+    else if ((board[row + 2][col + 1] == EMPTY && row + 2 == moveRow && col + 1 == moveCol) ||
+             (checkForWhitePiece(board, row + 2, col + 1) && row + 2 == moveRow && col + 1 == moveCol))
+    {
+        valid = true;
+    }
+    else
+    {
+        valid = false;
+    }
+    return valid;
 }
 
 bool diagonallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol)
