@@ -101,4 +101,8 @@ bool verticallyCheck(char board[8][8], int row, int col, int moveRow, int moveCo
  */
 bool checkBishopMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
 
+bool diagonallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol);
+
+bool checkQueenMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
+
 #endif

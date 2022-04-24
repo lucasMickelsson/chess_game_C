@@ -216,7 +216,7 @@ int player1(char board[8][8])
             validMove = isWhite(pieceStart);
             if (!validMove)
             {
-                printf("Not a valid piece for player 1, should use white players: ");
+                printf("Not a valid piece for player 1, should use white pieces: ");
             }
             else
             {
@@ -280,7 +280,7 @@ int player2(char board[8][8])
             validMove = isBlack(pieceStart);
             if (!validMove)
             {
-                printf("Not a valid piece for player 2, should use black players: ");
+                printf("Not a valid piece for player 2, should use black pieces: ");
             }
             else
             {
