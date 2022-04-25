@@ -221,14 +221,34 @@ int player1(char board[8][8])
             }
             else
             {
-                validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
-                if (!validMove)
+                if (pieceStart == KING)
                 {
-                    printf("The chess move is invalid, try again: ");
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        if (kingInCheck(board, WHITE))
+                        {
+                            printf("The white king is in danger, you have to escape!\n");
+                            changeBoard(board, p2.row, p2.col, p1.row, p1.col);
+                        }
+                    }
                 }
                 else
                 {
-                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    }
                 }
             }
         }
