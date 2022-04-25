@@ -11,6 +11,7 @@ int pawnWhiteStatus[8] = {0};
 bool validMoves(char board[8][8], char piece, int startRow, int startCol, int moveRow, int moveCol)
 {
     bool isValidMove = true;
+
     if (isBlack(piece))
     {
         if (piece == PAWN + BLACK)
@@ -25,6 +26,7 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
         }
         else if (piece == BLACK + KING)
         {
+            // We have to add control if king is save
             isValidMove = checkBlackKingMoves(board, startRow, startCol, moveRow, moveCol);
             return isValidMove;
         }
@@ -43,6 +45,7 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
         isValidMove = checkQueenMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case KING:
+        // We have to add control if king is save
         isValidMove = checkWhiteKingMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case BISHOP:

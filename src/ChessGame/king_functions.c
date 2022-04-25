@@ -50,7 +50,7 @@ bool kingIsSafe(char board[8][8], int row, int col)
         {
             return false;
         }
-        else if (row + 1 <= 7 && col + 1 >= 7 && getPieceAtPosition(board, row + 1, col + 1) == PAWN + BLACK)
+        else if (row + 1 <= 7 && col + 1 <= 7 && getPieceAtPosition(board, row + 1, col + 1) == PAWN + BLACK)
         {
             return false;
         }
@@ -70,7 +70,7 @@ bool kingIsSafe(char board[8][8], int row, int col)
         {
             return false;
         }
-        else if (row - 1 <= 0 && col + 1 >= 7 && getPieceAtPosition(board, row - 1, col + 1) == PAWN)
+        else if (row - 1 >= 0 && col + 1 <= 7 && getPieceAtPosition(board, row - 1, col + 1) == PAWN)
         {
             return false;
         }
@@ -92,42 +92,98 @@ bool checkWhiteKingMoves(char board[8][8], int row, int col, int moveRow, int mo
     if ((board[row + 1][col] == EMPTY && row + 1 == moveRow && col == moveCol) ||
         (checkForBlackPiece(board, row + 1, col) && row + 1 == moveRow && col == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row + 1][col + 1] == EMPTY && row + 1 == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row + 1, col + 1) && row + 1 == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row][col + 1] == EMPTY && row == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row, col + 1) && row == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col + 1] == EMPTY && row - 1 == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row - 1, col + 1) && row - 1 == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col] == EMPTY && row - 1 == moveRow && col == moveCol) ||
              (checkForBlackPiece(board, row - 1, col) && row - 1 == moveRow && col == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col - 1] == EMPTY && row - 1 == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row - 1, col - 1) && row - 1 == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row][col - 1] == EMPTY && row == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row, col - 1) && row == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row + 1][col - 1] == EMPTY && row + 1 == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row + 1, col - 1) && row + 1 == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else
     {
@@ -142,42 +198,98 @@ bool checkBlackKingMoves(char board[8][8], int row, int col, int moveRow, int mo
     if ((board[row + 1][col] == EMPTY && row + 1 == moveRow && col == moveCol) ||
         (checkForWhitePiece(board, row + 1, col) && row + 1 == moveRow && col == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row + 1][col + 1] == EMPTY && row + 1 == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row + 1, col + 1) && row + 1 == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row][col + 1] == EMPTY && row == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row, col + 1) && row == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col + 1] == EMPTY && row - 1 == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row - 1, col + 1) && row - 1 == moveRow && col + 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col + 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col] == EMPTY && row - 1 == moveRow && col == moveCol) ||
              (checkForWhitePiece(board, row - 1, col) && row - 1 == moveRow && col == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row - 1][col - 1] == EMPTY && row - 1 == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row - 1, col - 1) && row - 1 == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row - 1, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row][col - 1] == EMPTY && row == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row, col - 1) && row == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else if ((board[row + 1][col - 1] == EMPTY && row + 1 == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row + 1, col - 1) && row + 1 == moveRow && col - 1 == moveCol))
     {
-        valid = true;
+        if (kingIsSafe(board, row + 1, col - 1))
+        {
+            valid = true;
+        }
+        else
+        {
+            valid = false;
+        }
     }
     else
     {

@@ -210,7 +210,7 @@ struct coord getChessIndex(char *string1)
 }
 bool isWhite(char pieceId)
 {
-    if (!(pieceId > BLACK || pieceId == EMPTY))
+    if (!(pieceId >= BLACK || pieceId == EMPTY))
     {
         return true;
     }
@@ -221,7 +221,7 @@ bool isWhite(char pieceId)
 }
 bool isBlack(char pieceId)
 {
-    if (pieceId > BLACK)
+    if (pieceId >= BLACK)
     {
         return true;
     }
