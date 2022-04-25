@@ -1,6 +1,7 @@
 #ifndef MAINH
 #define MAINH
 #include <stdbool.h>
+#include "pieces_list.h"
 
 void printLines(void);
 void clear_buffer();

@@ -16,19 +16,13 @@ int main(void)
     VERIFY(list_empty(thelist), "list is empty");
 
     TEST_CASE("Insert a node into the list");
-    piece newOne;
-    newOne.color = WHITE;
-    newOne.piece_dead = false;
-    newOne.pieceID = KING;
+    char newOne = KING;
 
     thelist = push(thelist, newOne);
 
     VERIFY(!list_empty(thelist), "list is not empty");
 
-    piece onemore;
-    onemore.color = BLACK;
-    onemore.piece_dead = true;
-    onemore.pieceID = QUEEN;
+    char onemore = QUEEN;
     thelist = push(thelist, onemore);
 
     TEST_CASE("Delete the list");

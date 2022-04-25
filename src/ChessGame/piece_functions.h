@@ -100,15 +100,10 @@ bool verticallyCheck(char board[8][8], int row, int col, int moveRow, int moveCo
  * @return false
  */
 bool checkBishopMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
-
 bool diagonallyCheck(char board[8][8], int row, int col, int moveRow, int moveCol);
-
 bool checkQueenMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
-
 bool checkWhiteHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
 bool checkBlackHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
-
-bool checkWhiteKingMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
-bool checkBlackKingMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
+bool kingInCheck(char board[8][8], char colorKing);
 
 #endif

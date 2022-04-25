@@ -7,6 +7,7 @@
 #include "main.h"
 #include "piece_functions.h"
 #include "debug.h"
+#include "pieces_list.h"
 
 void printLines(void)
 {
@@ -324,6 +325,7 @@ bool equalStrings(char *string1, char *string2)
 
 void chessGameGo(int chessMode)
 {
+    // a_piece *newList = create_list();
     char chessBoard[8][8];
     initChessBoard(chessBoard);
     bool go = true;

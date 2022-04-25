@@ -2,17 +2,10 @@
 #define PIECESH
 #include <stdbool.h>
 
-typedef struct piece
-{
-    char color;
-    char pieceID;
-    bool piece_dead;
-} piece;
-
 /*We will store total number of pieces in a list */
 typedef struct piece_list
 {
-    piece the_piece;
+    char the_piece;
     struct piece_list *next;
 } a_piece;
 
@@ -21,7 +14,7 @@ typedef struct piece_list
  * @param headptr pointer to the head of list
  * @return the new header
  */
-a_piece *push(a_piece *headptr, piece data);
+a_piece *push(a_piece *headptr, char data);
 
 /**
  * Function for creating a new list

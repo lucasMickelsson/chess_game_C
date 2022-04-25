@@ -19,7 +19,7 @@ bool list_empty(a_piece *headptr)
     }
 }
 
-a_piece *push(a_piece *headptr, piece data)
+a_piece *push(a_piece *headptr, char data)
 {
     a_piece *newpiece;
     newpiece = malloc(sizeof(a_piece));
