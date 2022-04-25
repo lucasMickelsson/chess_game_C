@@ -64,7 +64,6 @@ bool checkForBlackPiece(char board[8][8], int row, int col)
     case BLACK + PAWN:
     case BLACK + HORSE:
     case BLACK + QUEEN:
-    case BLACK + KING:
     case BLACK + BISHOP:
     case BLACK + TOWER:
         return true;
@@ -81,7 +80,6 @@ bool checkForWhitePiece(char board[8][8], int row, int col)
     case PAWN:
     case HORSE:
     case QUEEN:
-    case KING:
     case BISHOP:
     case TOWER:
         return true;
