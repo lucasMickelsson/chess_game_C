@@ -15,7 +15,7 @@ endif
 
 # Main targets
 
-king_functions.o: king_functions.c king_functions.h chessBoard.h piece_functions.h
+king_functions.o: king_functions.c king_functions.h chessBoard.h piece_functions.h main.h
 	gcc $(CFLAGS) -c king_functions.c -o king_functions.o 
 
 pieces_list.o: pieces_list.c pieces_list.h
@@ -27,7 +27,7 @@ piece_functions.o: piece_functions.c piece_functions.h chessBoard.h debug.h king
 chessBoard.o: chessBoard.c chessBoard.h
 	gcc $(CFLAGS) -c chessBoard.c -o chessBoard.o
 
-main.o: main.c main.h chessBoard.h piece_functions.h debug.h pieces_list.h
+main.o: main.c main.h chessBoard.h piece_functions.h debug.h pieces_list.h king_functions.h
 	gcc $(CFLAGS) -c main.c -o main.o
 
 chess$(EXEEXT): main.o chessBoard.o piece_functions.o pieces_list.o king_functions.o

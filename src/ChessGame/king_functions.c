@@ -1,8 +1,68 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "king_functions.h"
 #include "chessBoard.h"
 #include "piece_functions.h"
+#include "main.h"
+
+int moveThreatedKing(char board[8][8], char color)
+{
+    char command[10];
+    char *end, *start;
+    bool valid = false;
+    struct coord p1, p2;
+
+    printf("\nMove the king away: ");
+    do
+    {
+        readString(command, 10);
+        if (strcmp(command, "quit") == 0)
+        {
+            return -1;
+        }
+        start = strtok(command, " ");
+        end = strtok(NULL, " ");
+
+        if (start == NULL || end == NULL)
+        {
+            printf("Invalid input for chess move try again in this format(startPos endPos): ");
+        }
+        else if (positionStrings(start) && positionStrings(end))
+        {
+            p1 = getChessIndex(start);
+            p2 = getChessIndex(end);
+            // printf("Coors are %d %d\n", p1.row, p1.col);
+            char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
+            if (pieceStart == KING)
+            {
+                char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
+                valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!valid)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    if (kingInCheck(board, color))
+                    {
+                        printf("The white king will enter a square where it get threated, invalid!\n");
+                        setPieceAtPosition(board, color + KING, p1.row, p1.col);
+                        setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                        moveThreatedKing(board, color);
+                    }
+                }
+            }
+            else
+            {
+                printf("You have to move the king away from danger: ");
+            }
+        }
+    } while (!valid);
+
+    return valid;
+}
 
 bool kingInCheck(char board[8][8], char colorKing)
 {
@@ -92,98 +152,42 @@ bool checkWhiteKingMoves(char board[8][8], int row, int col, int moveRow, int mo
     if ((board[row + 1][col] == EMPTY && row + 1 == moveRow && col == moveCol) ||
         (checkForBlackPiece(board, row + 1, col) && row + 1 == moveRow && col == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row + 1][col + 1] == EMPTY && row + 1 == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row + 1, col + 1) && row + 1 == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row][col + 1] == EMPTY && row == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row, col + 1) && row == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col + 1] == EMPTY && row - 1 == moveRow && col + 1 == moveCol) ||
              (checkForBlackPiece(board, row - 1, col + 1) && row - 1 == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col] == EMPTY && row - 1 == moveRow && col == moveCol) ||
              (checkForBlackPiece(board, row - 1, col) && row - 1 == moveRow && col == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col - 1] == EMPTY && row - 1 == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row - 1, col - 1) && row - 1 == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row][col - 1] == EMPTY && row == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row, col - 1) && row == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row + 1][col - 1] == EMPTY && row + 1 == moveRow && col - 1 == moveCol) ||
              (checkForBlackPiece(board, row + 1, col - 1) && row + 1 == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else
     {
@@ -198,98 +202,42 @@ bool checkBlackKingMoves(char board[8][8], int row, int col, int moveRow, int mo
     if ((board[row + 1][col] == EMPTY && row + 1 == moveRow && col == moveCol) ||
         (checkForWhitePiece(board, row + 1, col) && row + 1 == moveRow && col == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row + 1][col + 1] == EMPTY && row + 1 == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row + 1, col + 1) && row + 1 == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row][col + 1] == EMPTY && row == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row, col + 1) && row == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col + 1] == EMPTY && row - 1 == moveRow && col + 1 == moveCol) ||
              (checkForWhitePiece(board, row - 1, col + 1) && row - 1 == moveRow && col + 1 == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col + 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col] == EMPTY && row - 1 == moveRow && col == moveCol) ||
              (checkForWhitePiece(board, row - 1, col) && row - 1 == moveRow && col == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row - 1][col - 1] == EMPTY && row - 1 == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row - 1, col - 1) && row - 1 == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row - 1, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row][col - 1] == EMPTY && row == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row, col - 1) && row == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else if ((board[row + 1][col - 1] == EMPTY && row + 1 == moveRow && col - 1 == moveCol) ||
              (checkForWhitePiece(board, row + 1, col - 1) && row + 1 == moveRow && col - 1 == moveCol))
     {
-        if (kingIsSafe(board, row + 1, col - 1))
-        {
-            valid = true;
-        }
-        else
-        {
-            valid = false;
-        }
+        valid = true;
     }
     else
     {

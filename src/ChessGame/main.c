@@ -8,6 +8,7 @@
 #include "piece_functions.h"
 #include "debug.h"
 #include "pieces_list.h"
+#include "king_functions.h"
 
 void printLines(void)
 {
@@ -188,7 +189,23 @@ int player1(char board[8][8])
     char command[10];
     bool validMove = false;
     char *end, *start;
+    int result;
     struct coord p1, p2;
+
+    if (kingInCheck(board, WHITE))
+    {
+        // Function for moving a therated king
+        result = moveThreatedKing(board, WHITE);
+        if (result == -1)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
     printf("\nPlayer 1 Turn:\n");
 
     printf("Enter the white piece to move: ");
@@ -223,6 +240,7 @@ int player1(char board[8][8])
             {
                 if (pieceStart == KING)
                 {
+                    char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
@@ -233,8 +251,10 @@ int player1(char board[8][8])
                         changeBoard(board, p1.row, p1.col, p2.row, p2.col);
                         if (kingInCheck(board, WHITE))
                         {
-                            printf("The white king is in danger, you have to escape!\n");
-                            changeBoard(board, p2.row, p2.col, p1.row, p1.col);
+                            printf("The white king will enter a square where it get threated, invalid!\n");
+                            setPieceAtPosition(board, KING, p1.row, p1.col);
+                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            player1(board);
                         }
                     }
                 }
