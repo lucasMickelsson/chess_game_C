@@ -296,6 +296,21 @@ int player2(char board[8][8])
     bool validMove = false;
     char *end, *start;
     struct coord p1, p2;
+    int result;
+
+    if (kingInCheck(board, BLACK))
+    {
+        // Function for moving a therated king
+        result = moveThreatedKing(board, BLACK, play2);
+        if (result == -1)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
+    }
     printf("\nPlayer 2 Turn:\n");
 
     printf("Enter the black piece to move: ");
@@ -327,14 +342,37 @@ int player2(char board[8][8])
             }
             else
             {
-                validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
-                if (!validMove)
+                if (pieceStart == KING + BLACK)
                 {
-                    printf("The chess move is invalid, try again: ");
+                    char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        if (kingInCheck(board, BLACK))
+                        {
+                            printf("The king will enter a square where it get threated, invalid!\n");
+                            setPieceAtPosition(board, KING + BLACK, p1.row, p1.col);
+                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            player2(board);
+                        }
+                    }
                 }
                 else
                 {
-                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    }
                 }
             }
         }
