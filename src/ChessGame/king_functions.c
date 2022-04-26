@@ -34,7 +34,7 @@ int moveThreatedKing(char board[8][8], char color, char player)
             p2 = getChessIndex(end);
             // printf("Coors are %d %d\n", p1.row, p1.col);
             char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
-            if (pieceStart == KING)
+            if (pieceStart == KING + color)
             {
                 char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                 valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
@@ -68,7 +68,7 @@ int moveThreatedKing(char board[8][8], char color, char player)
                     if (kingInCheck(board, color))
                     {
                         printf("The king is still in danger. Save it!\n");
-                        setPieceAtPosition(board, color + KING, p1.row, p1.col);
+                        setPieceAtPosition(board, pieceStart, p1.row, p1.col);
                         setPieceAtPosition(board, oldpiece, p2.row, p2.col);
                         moveThreatedKing(board, color, player);
                     }
@@ -123,6 +123,7 @@ bool kingInCheck(char board[8][8], char colorKing)
 
 bool kingIsSafe(char board[8][8], int row, int col)
 {
+    int i, j;
     if (isWhite(getPieceAtPosition(board, row, col)))
     {
         // Check for black pawns
@@ -134,11 +135,303 @@ bool kingIsSafe(char board[8][8], int row, int col)
         {
             return false;
         }
+        // Checking diagonals
+        // Checking diagonal upper right
+        for (int i = row + 1, j = col + 1; i <= 7 && j <= 7; i++, j++)
+        {
+            char piece = getPieceAtPosition(board, i, j);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + BISHOP ||
+                         (piece == BLACK + KING && i - row == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking diagonal upper left
+        for (int i = row + 1, j = col - 1; i <= 7 && j >= 0; i++, j--)
+        {
+            char piece = getPieceAtPosition(board, i, j);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + BISHOP ||
+                         (piece == BLACK + KING && i - row == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking diagonal lower left
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
+        {
+            char piece = getPieceAtPosition(board, i, j);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + BISHOP ||
+                         (piece == BLACK + KING && row - i == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking diagonal lower right
+        for (int i = row - 1, j = col + 1; i >= 0 && j <= 7; i--, j++)
+        {
+            char piece = getPieceAtPosition(board, i, j);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + BISHOP ||
+                         (piece == BLACK + KING && row - i == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking horizontally and vertically
+        // Checking right
+        for (int i = col + 1; i <= 7; i++)
+        {
+            char piece = getPieceAtPosition(board, row, i);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + TOWER ||
+                         (piece == BLACK + KING && i - col == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking left
+        for (int i = col - 1; i >= 0; i--)
+        {
+            char piece = getPieceAtPosition(board, row, i);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + TOWER ||
+                         (piece == BLACK + KING && col - i == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking up
+        for (int i = row + 1; i <= 7; i++)
+        {
+            char piece = getPieceAtPosition(board, i, col);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + TOWER ||
+                         (piece == BLACK + KING && i - row == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        // Checking down
+        for (int i = row - 1; i >= 0; i--)
+        {
+            char piece = getPieceAtPosition(board, i, col);
+            if (piece != EMPTY)
+            {
+                if (isWhite(piece)) // Friendly piece
+                {
+                    break;
+                }
+                else if (piece == BLACK + QUEEN || piece == BLACK + TOWER ||
+                         (piece == BLACK + KING && row - i == 1))
+                {
+                    return false;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
         // Check for horses
-        // Check for Bishops
-        // Check for Queens
-        // Check for towers
-        // Check for king
+        // up
+        i = row + 2;
+        if (i <= 7)
+        {
+            // Left
+            j = col - 1;
+            if (j >= 0)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Right
+            j = col + 1;
+            if (j <= 7)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // down
+        i = row - 2;
+        if (i >= 0)
+        {
+            // Left
+            j = col - 1;
+            if (j >= 0)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Right
+            j = col + 1;
+            if (j <= 7)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // right
+        j = col + 2;
+        if (j >= 0)
+        {
+            // Left
+            i = row + 1;
+            if (i <= 7)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Right
+            j = row - 1;
+            if (j >= 0)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        // left
+        j = col - 2;
+        if (j >= 0)
+        {
+            // Left
+            i = row - 1;
+            if (i <= 7)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Right
+            j = row + 1;
+            if (j <= 7)
+            {
+                char piece = getPieceAtPosition(board, i, j);
+                if (piece != EMPTY)
+                {
+                    if (piece == BLACK + HORSE)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
 
         // No threats founded
         return true;
