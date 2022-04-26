@@ -6,14 +6,14 @@
 #include "piece_functions.h"
 #include "main.h"
 
-int moveThreatedKing(char board[8][8], char color)
+int moveThreatedKing(char board[8][8], char color, char player)
 {
     char command[10];
     char *end, *start;
     bool valid = false;
     struct coord p1, p2;
 
-    printf("\nMove the king away: ");
+    printf("\nPlayer %d Save the king! ", player);
     do
     {
         readString(command, 10);
@@ -47,16 +47,36 @@ int moveThreatedKing(char board[8][8], char color)
                     changeBoard(board, p1.row, p1.col, p2.row, p2.col);
                     if (kingInCheck(board, color))
                     {
-                        printf("The white king will enter a square where it get threated, invalid!\n");
+                        printf("The king will enter a square where it get threated, invalid!\n");
                         setPieceAtPosition(board, color + KING, p1.row, p1.col);
                         setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
-                        moveThreatedKing(board, color);
+                        moveThreatedKing(board, color, player);
+                    }
+                }
+            }
+            else if (pieceStart != color + KING)
+            {
+                char oldpiece = getPieceAtPosition(board, p2.row, p2.col);
+                valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!valid)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    if (kingInCheck(board, color))
+                    {
+                        printf("The king is still in danger. Save it!\n");
+                        setPieceAtPosition(board, color + KING, p1.row, p1.col);
+                        setPieceAtPosition(board, oldpiece, p2.row, p2.col);
+                        moveThreatedKing(board, color, player);
                     }
                 }
             }
             else
             {
-                printf("You have to move the king away from danger: ");
+                printf("You have to protect the king away from danger: ");
             }
         }
     } while (!valid);

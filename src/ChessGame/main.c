@@ -9,6 +9,8 @@
 #include "debug.h"
 #include "pieces_list.h"
 #include "king_functions.h"
+#define play1 1
+#define play2 2
 
 void printLines(void)
 {
@@ -195,7 +197,7 @@ int player1(char board[8][8])
     if (kingInCheck(board, WHITE))
     {
         // Function for moving a therated king
-        result = moveThreatedKing(board, WHITE);
+        result = moveThreatedKing(board, WHITE, play1);
         if (result == -1)
         {
             return -1;
