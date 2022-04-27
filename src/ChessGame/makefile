@@ -22,16 +22,16 @@ pieces_list.o: pieces_list.c pieces_list.h
 	gcc $(CFLAGS) -c pieces_list.c -o pieces_list.o
 
 piece_functions.o: piece_functions.c piece_functions.h chessBoard.h debug.h king_functions.h
-	gcc $(CFLAGS) -c piece_functions.c -o piece_functions.o
+	gcc $(CFLAGS) -c piece_functions.c -D DEBUGON -o piece_functions.o
 
 chessBoard.o: chessBoard.c chessBoard.h
 	gcc $(CFLAGS) -c chessBoard.c -o chessBoard.o
 
 main.o: main.c main.h chessBoard.h piece_functions.h debug.h pieces_list.h king_functions.h
-	gcc $(CFLAGS) -c main.c -o main.o
+	gcc $(CFLAGS) -c main.c -D DEBUGON -o main.o
 
 chess$(EXEEXT): main.o chessBoard.o piece_functions.o pieces_list.o king_functions.o
-	gcc $(CFLAGS) $(OBJ) -o chess
+	gcc $(CFLAGS) $(OBJ) -D DEBUGON -o chess
 
 chess: chess$(EXEEXT)
 

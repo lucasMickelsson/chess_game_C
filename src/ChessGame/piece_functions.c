@@ -181,12 +181,12 @@ bool checkBlackPawnMoves(char board[8][8], int row, int col, int moveRow, int mo
         {
             valid = true;
         }
-        else if (checkForBlackPiece(board, row - 1, col - 1) &&
+        else if (checkForWhitePiece(board, row - 1, col - 1) &&
                  row - 1 == moveRow && col - 1 == moveCol) // you can knock a black piece out diagonally right
         {
             valid = true;
         }
-        else if (checkForBlackPiece(board, row - 1, col + 1) &&
+        else if (checkForWhitePiece(board, row - 1, col + 1) &&
                  row - 1 == moveRow && col + 1 == moveCol) // also diagonally left
         {
             valid = true;
