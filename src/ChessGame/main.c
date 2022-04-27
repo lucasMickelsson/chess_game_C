@@ -210,7 +210,7 @@ int player1(char board[8][8])
 
     printf("\nPlayer 1 Turn:\n");
 
-    printf("Enter the white piece to move: ");
+    printf("Enter chess move to make(startPos endPos): ");
     // here we have to add functions for checking input
     do
     {
@@ -313,7 +313,7 @@ int player2(char board[8][8])
     }
     printf("\nPlayer 2 Turn:\n");
 
-    printf("Enter the black piece to move: ");
+    printf("Enter chess move to make(startPos endPos): ");
     do
     {
         readString(command, 10);
