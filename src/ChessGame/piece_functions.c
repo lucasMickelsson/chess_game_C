@@ -4,17 +4,13 @@
 #include "king_functions.h"
 #include "debug.h"
 
-// Every time we move a pawn one step forward we inkrease its status with 1
-int pawnBlackStatus[8] = {0};
-int pawnWhiteStatus[8] = {0};
-
 bool validMoves(char board[8][8], char piece, int startRow, int startCol, int moveRow, int moveCol)
 {
     bool isValidMove = true;
 
     if (isBlack(piece))
     {
-        if (piece == PAWN + BLACK)
+        if (piece == BLACK + PAWN)
         {
             isValidMove = checkBlackPawnMoves(board, startRow, startCol, moveRow, moveCol);
             return isValidMove;
@@ -97,7 +93,7 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
 {
     bool valid = false;
 
-    if (pawnWhiteStatus[col] == 0) // if the pawn is at the start position
+    if (row == 1) // if the pawn is at the start position
     {
         if (board[row + 2][col] == EMPTY &&
             row + 2 == moveRow && col == moveCol) // you can move to it 2 steps forward
@@ -108,21 +104,18 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
         else if (board[row + 1][col] == EMPTY &&
                  row + 1 == moveRow && col == moveCol) // you can move to it 1 step otherwise
         {
-
             DEBUG("1 steps forward start");
             valid = true;
         }
         else if (checkForBlackPiece(board, row + 1, col + 1) &&
                  row + 1 == moveRow && col + 1 == moveCol) // you can knock a black piece out diagonally right
         {
-
             DEBUG("knock a piece out right");
             valid = true;
         }
         else if (checkForBlackPiece(board, row + 1, col - 1) &&
                  row + 1 == moveRow && col - 1 == moveCol) // also diagonally left
         {
-
             DEBUG("knock a piece out left");
             valid = true;
         }
@@ -158,41 +151,41 @@ bool checkWhitePawnMoves(char board[8][8], int row, int col, int moveRow, int mo
             valid = false;
         }
     }
-    if (valid)
-    {
-        pawnWhiteStatus[col]++;
-    }
-
     return valid;
 }
 bool checkBlackPawnMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
 {
     bool valid = false;
 
-    if (pawnBlackStatus[col] == 0) // if the pawn is in the start position
+    if (row == 6) // if the pawn is in the start position
     {
         if (board[row - 2][col] == EMPTY &&
             row - 2 == moveRow && col == moveCol) // you can move to it 2 steps forward
         {
+            DEBUG("2 step forward black");
             valid = true;
         }
         else if (board[row - 1][col] == EMPTY &&
                  row - 1 == moveRow && col == moveCol) // you can move to it 1 step otherwise
         {
+            DEBUG("1 step forward black");
             valid = true;
         }
         else if (checkForWhitePiece(board, row - 1, col - 1) &&
                  row - 1 == moveRow && col - 1 == moveCol) // you can knock a black piece out diagonally right
         {
+            DEBUG("knock piece diag left black");
             valid = true;
         }
         else if (checkForWhitePiece(board, row - 1, col + 1) &&
                  row - 1 == moveRow && col + 1 == moveCol) // also diagonally left
         {
+            DEBUG("knock piece diag right black");
             valid = true;
         }
         else
         {
+            DEBUG("Inavlid move");
             valid = false;
         }
     }
@@ -201,26 +194,26 @@ bool checkBlackPawnMoves(char board[8][8], int row, int col, int moveRow, int mo
         if (board[row - 1][col] == EMPTY &&
             row - 1 == moveRow && col == moveCol)
         {
+            DEBUG("one step forward black cannot go 2 step");
             valid = true;
         }
         else if (checkForWhitePiece(board, row - 1, col - 1) &&
                  row - 1 == moveRow && col - 1 == moveCol) // you can knock a black piece out diagonally right
         {
+            DEBUG("knock a piece out diag left black cannot go 2 step");
             valid = true;
         }
         else if (checkForWhitePiece(board, row - 1, col + 1) &&
                  row - 1 == moveRow && col + 1 == moveCol) // also diagonally left
         {
+            DEBUG("knock a piece out diag right black cannot go 2 step");
             valid = true;
         }
         else
         {
+            DEBUG("inavlid move black cannot go 2 step");
             valid = false;
         }
-    }
-    if (valid)
-    {
-        pawnBlackStatus[col]++;
     }
     return valid;
 }

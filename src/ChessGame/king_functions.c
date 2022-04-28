@@ -101,7 +101,7 @@ bool kingInCheck(char board[8][8], char colorKing)
                 }
             }
         }
-        return !blackKingIsSafe(board, row, col);
+        return !blackPieceIsSafe(board, row, col);
     }
     else
     {
@@ -117,11 +117,11 @@ bool kingInCheck(char board[8][8], char colorKing)
                 }
             }
         }
-        return !whiteKingIsSafe(board, row, col);
+        return !whitePieceIsSafe(board, row, col);
     }
 }
 
-bool whiteKingIsSafe(char board[8][8], int row, int col)
+bool whitePieceIsSafe(char board[8][8], int row, int col)
 {
     int i, j;
     if (isWhite(getPieceAtPosition(board, row, col)))
@@ -543,7 +543,7 @@ bool checkBlackKingMoves(char board[8][8], int row, int col, int moveRow, int mo
     }
     return valid;
 }
-bool blackKingIsSafe(char board[8][8], int row, int col)
+bool blackPieceIsSafe(char board[8][8], int row, int col)
 {
     int i, j;
     if (isBlack(getPieceAtPosition(board, row, col)))
@@ -861,5 +861,18 @@ bool blackKingIsSafe(char board[8][8], int row, int col)
     {
         // empty square
         return true;
+    }
+}
+
+bool checkMate(char board[8][8], int color)
+{
+    /*Checkmate will happen if king is threated and the player can not block it and not
+    knock the piece out*/
+    if (isBlack(color))
+    {
+        /* code */
+    }
+    else
+    {
     }
 }
