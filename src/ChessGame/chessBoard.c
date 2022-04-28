@@ -234,3 +234,13 @@ void setPieceAtPosition(char board[8][8], char pieceId, int row, int col)
 {
     board[row][col] = pieceId;
 }
+void copyBoard(char oldBoard[8][8], char aCopy[8][8])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            aCopy[i][j] = oldBoard[i][j];
+        }
+    }
+}

@@ -866,13 +866,132 @@ bool blackPieceIsSafe(char board[8][8], int row, int col)
 
 bool checkMate(char board[8][8], int color)
 {
+    struct coord king;
+    bool isValid = false;
+    char newBoard[8][8];
     /*Checkmate will happen if king is threated and the player can not block it and not
     knock the piece out*/
     if (isBlack(color))
     {
-        /* code */
+        // First check if we can knock the piece or block the piece
+        // Find the black king
+        king = findKing(board, BLACK);
+        if (!kingInCheck(board, BLACK)) // In order to check for chess mate the king has to be threated
+        {
+            copyBoard(board, newBoard); // We make a copy of the board
+            // Check if we can move king to a place were its safe
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col) &&
+                king.row + 1 <= 7)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col);
+                if (blackPieceIsSafe(newBoard, king.row + 1, king.col))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col + 1) &&
+                king.row + 1 <= 7 && king.col + 1 <= 7)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col + 1);
+                if (blackPieceIsSafe(newBoard, king.row + 1, king.col + 1))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row, king.col + 1) &&
+                king.col + 1 <= 7)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row, king.col + 1);
+                if (blackPieceIsSafe(newBoard, king.row, king.col + 1))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col + 1) &&
+                king.col + 1 <= 7 && king.row - 1 >= 0)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col + 1);
+                if (blackPieceIsSafe(newBoard, king.row - 1, king.col + 1))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col) &&
+                king.row - 1 >= 0)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col);
+                if (blackPieceIsSafe(newBoard, king.row - 1, king.col))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col - 1) &&
+                king.row - 1 >= 0 && king.col - 1 >= 0)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col - 1);
+                if (blackPieceIsSafe(newBoard, king.row - 1, king.col - 1))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row, king.col - 1) &&
+                king.col - 1 >= 0)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row, king.col - 1);
+                if (blackPieceIsSafe(newBoard, king.row, king.col - 1))
+                {
+                    return false;
+                }
+            }
+            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col - 1) &&
+                king.row + 1 <= 7 && king.col - 1 >= 0)
+            {
+                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col - 1);
+                if (blackPieceIsSafe(newBoard, king.row + 1, king.col - 1))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
     }
+}
+struct coord findKing(char board[8][8], char color)
+{
+    struct coord kingPos;
+    if (isBlack(color))
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (getPieceAtPosition(board, i, j) == KING + BLACK)
+                {
+                    kingPos.row = i;
+                    kingPos.col = j;
+                }
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (getPieceAtPosition(board, i, j) == KING)
+                {
+                    kingPos.row = i;
+                    kingPos.col = j;
+                }
+            }
+        }
+    }
+    return kingPos;
 }

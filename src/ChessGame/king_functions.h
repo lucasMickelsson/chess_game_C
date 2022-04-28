@@ -8,5 +8,6 @@ int moveThreatedKing(char board[8][8], char color, char player);
 bool whitePieceIsSafe(char board[8][8], int row, int col);
 bool blackPieceIsSafe(char board[8][8], int row, int col);
 bool checkMate(char board[8][8], int color);
+struct coord findKing(char board[8][8], char color);
 
 #endif
