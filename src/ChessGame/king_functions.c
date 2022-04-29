@@ -6,6 +6,29 @@
 #include "piece_functions.h"
 #include "main.h"
 
+bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
+{
+    char tempBoard[8][8];
+    copyBoard(board, tempBoard);
+    changeBoard(tempBoard, row, col, moveRow, moveCol); // Make the planning move and check for threat
+    if (kingInCheck(tempBoard, color))
+    {
+        if (getPieceAtPosition(board, row, col) == KING + color)
+        {
+            printf("The king will enter a square where it get threated, invalid!\n");
+        }
+        else
+        {
+            printf("The king is still in danger\n");
+        }
+        return true;
+    }
+    else
+    {
+        changeBoard(board, row, col, moveRow, moveCol);
+        return false;
+    }
+}
 int moveThreatedKing(char board[8][8], char color, char player)
 {
     char command[10];
@@ -32,11 +55,9 @@ int moveThreatedKing(char board[8][8], char color, char player)
         {
             p1 = getChessIndex(start);
             p2 = getChessIndex(end);
-            // printf("Coors are %d %d\n", p1.row, p1.col);
             char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
             if (pieceStart == KING + color)
             {
-                char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                 valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                 if (!valid)
                 {
@@ -44,19 +65,14 @@ int moveThreatedKing(char board[8][8], char color, char player)
                 }
                 else
                 {
-                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
-                    if (kingInCheck(board, color))
+                    if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
                     {
-                        printf("The king will enter a square where it get threated, invalid!\n");
-                        setPieceAtPosition(board, color + KING, p1.row, p1.col);
-                        setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
                         moveThreatedKing(board, color, player);
                     }
                 }
             }
             else if (pieceStart != color + KING)
             {
-                char oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                 valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                 if (!valid)
                 {
@@ -64,12 +80,8 @@ int moveThreatedKing(char board[8][8], char color, char player)
                 }
                 else
                 {
-                    changeBoard(board, p1.row, p1.col, p2.row, p2.col);
-                    if (kingInCheck(board, color))
+                    if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
                     {
-                        printf("The king is still in danger. Save it!\n");
-                        setPieceAtPosition(board, pieceStart, p1.row, p1.col);
-                        setPieceAtPosition(board, oldpiece, p2.row, p2.col);
                         moveThreatedKing(board, color, player);
                     }
                 }
@@ -83,44 +95,20 @@ int moveThreatedKing(char board[8][8], char color, char player)
 
     return valid;
 }
-
 bool kingInCheck(char board[8][8], char colorKing)
 {
-    int row, col;
+    struct coord kingPos;
     if (isBlack(colorKing))
     {
-        // Find the black king
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (getPieceAtPosition(board, i, j) == KING + BLACK)
-                {
-                    row = i;
-                    col = j;
-                }
-            }
-        }
-        return !blackPieceIsSafe(board, row, col);
+        kingPos = findKing(board, BLACK);
+        return !blackPieceIsSafe(board, kingPos.row, kingPos.col);
     }
     else
     {
-        // Find the white king
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                if (getPieceAtPosition(board, i, j) == KING)
-                {
-                    row = i;
-                    col = j;
-                }
-            }
-        }
-        return !whitePieceIsSafe(board, row, col);
+        kingPos = findKing(board, WHITE);
+        return !whitePieceIsSafe(board, kingPos.row, kingPos.col);
     }
 }
-
 bool whitePieceIsSafe(char board[8][8], int row, int col)
 {
     int i, j;
@@ -135,7 +123,7 @@ bool whitePieceIsSafe(char board[8][8], int row, int col)
         {
             return false;
         }
-        // Checking diagonals
+        // Checking diagonals (Bishop, Queen, King)
         // Checking diagonal upper right
         for (int i = row + 1, j = col + 1; i <= 7 && j <= 7; i++, j++)
         {
@@ -557,7 +545,7 @@ bool blackPieceIsSafe(char board[8][8], int row, int col)
         {
             return false;
         }
-        // Checking diagonals
+        // Checking diagonals (Bishop, Queen, King)
         // Checking diagonal upper right
         for (int i = row + 1, j = col + 1; i <= 7 && j <= 7; i++, j++)
         {

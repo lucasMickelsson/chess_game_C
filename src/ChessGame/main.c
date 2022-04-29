@@ -24,7 +24,6 @@ void printLines(void)
         printf("\n");
     }
 }
-
 void printLogo(void)
 {
     printLines();
@@ -102,7 +101,8 @@ void handleChessOptions()
         switch (option)
         {
         case 1:
-            selectNumbOfPlayers(option);
+            print2PlayerModeInfo();
+            chessGameGo(option);
             break;
 
         case 2:
@@ -119,62 +119,12 @@ void handleChessOptions()
         }
     } while (!back);
 }
-
-void modeOptions()
-{
-    printf("\nSelect number of players:\n\n");
-    printf("1. 2 players\n");
-    printf("\n2. 1 player (You vs AI)\n");
-    printf("\n3. Return back\n\n");
-}
-void selectNumbOfPlayers(int choice)
-{
-    bool back = false;
-    int option;
-    do
-    {
-        printLogo();
-        modeOptions();
-        option = user_selection();
-        switch (option)
-        {
-        case 1:
-            print2PlayerModeInfo();
-            chessGameGo(choice);
-            break;
-
-        case 2:
-            print1PlayerModeInfo();
-            // chessGameGo(choice);
-            break;
-
-        case 3:
-            back = true;
-            break;
-
-        default:
-            printf("Invalid option");
-            break;
-        }
-    } while (!back);
-}
-void print1PlayerModeInfo()
-{
-    clearScreen();
-    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
-    printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
-    printf("you will play as white while the AI plays as black.\n");
-    printf("enter 'quit' to leave the mode while playing\n\n");
-    confirm();
-    clear_buffer();
-}
 void confirm()
 {
     printf("Press any key to continue");
     getch();
     printf("\n\n\n");
 }
-
 void print2PlayerModeInfo()
 {
     clearScreen();

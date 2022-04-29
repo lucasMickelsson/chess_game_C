@@ -9,5 +9,6 @@ bool whitePieceIsSafe(char board[8][8], int row, int col);
 bool blackPieceIsSafe(char board[8][8], int row, int col);
 bool checkMate(char board[8][8], int color);
 struct coord findKing(char board[8][8], char color);
+bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol);
 
 #endif
