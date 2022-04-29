@@ -25,7 +25,7 @@ bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRo
     }
     else
     {
-        changeBoard(board, row, col, moveRow, moveCol);
+        // changeBoard(board, row, col, moveRow, moveCol);
         return false;
     }
 }
@@ -69,6 +69,10 @@ int moveThreatedKing(char board[8][8], char color, char player)
                     {
                         moveThreatedKing(board, color, player);
                     }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                    }
                 }
             }
             else if (pieceStart != color + KING)
@@ -83,6 +87,10 @@ int moveThreatedKing(char board[8][8], char color, char player)
                     if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
                     {
                         moveThreatedKing(board, color, player);
+                    }
+                    else
+                    {
+                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
                     }
                 }
             }
@@ -855,8 +863,6 @@ bool blackPieceIsSafe(char board[8][8], int row, int col)
 bool checkMate(char board[8][8], int color)
 {
     struct coord king;
-    bool isValid = false;
-    char newBoard[8][8];
     /*Checkmate will happen if king is threated and the player can not block it and not
     knock the piece out*/
     if (isBlack(color))
@@ -864,81 +870,52 @@ bool checkMate(char board[8][8], int color)
         // First check if we can knock the piece or block the piece
         // Find the black king
         king = findKing(board, BLACK);
-        if (!kingInCheck(board, BLACK)) // In order to check for chess mate the king has to be threated
+        if (kingInCheck(board, BLACK)) // In order to check for chess mate the king has to be threated
         {
-            copyBoard(board, newBoard); // We make a copy of the board
-            // Check if we can move king to a place were its safe
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col) &&
-                king.row + 1 <= 7)
+            // Check if we can move king to a place were its safe maximum of 8 positions
+            if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col) &&
+                king.row + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col))
             {
-                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col);
-                if (blackPieceIsSafe(newBoard, king.row + 1, king.col))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col + 1) &&
-                king.row + 1 <= 7 && king.col + 1 <= 7)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col + 1) &&
+                     king.row + 1 <= 7 && king.col + 1 <= 7 &&
+                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col + 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col + 1);
-                if (blackPieceIsSafe(newBoard, king.row + 1, king.col + 1))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row, king.col + 1) &&
-                king.col + 1 <= 7)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row, king.col + 1) &&
+                     king.col + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row, king.col + 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row, king.col + 1);
-                if (blackPieceIsSafe(newBoard, king.row, king.col + 1))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col + 1) &&
-                king.col + 1 <= 7 && king.row - 1 >= 0)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col + 1) &&
+                     king.col + 1 <= 7 && king.row - 1 >= 0 &&
+                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col + 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col + 1);
-                if (blackPieceIsSafe(newBoard, king.row - 1, king.col + 1))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col) &&
-                king.row - 1 >= 0)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col) &&
+                     king.row - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col))
             {
-                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col);
-                if (blackPieceIsSafe(newBoard, king.row - 1, king.col))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row - 1, king.col - 1) &&
-                king.row - 1 >= 0 && king.col - 1 >= 0)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col - 1) &&
+                     king.row - 1 >= 0 && king.col - 1 >= 0 &&
+                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col - 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row - 1, king.col - 1);
-                if (blackPieceIsSafe(newBoard, king.row - 1, king.col - 1))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row, king.col - 1) &&
-                king.col - 1 >= 0)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row, king.col - 1) &&
+                     king.col - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row, king.col - 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row, king.col - 1);
-                if (blackPieceIsSafe(newBoard, king.row, king.col - 1))
-                {
-                    return false;
-                }
+                return false;
             }
-            if (validMoves(newBoard, KING + BLACK, king.row, king.col, king.row + 1, king.col - 1) &&
-                king.row + 1 <= 7 && king.col - 1 >= 0)
+            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col - 1) &&
+                     king.row + 1 <= 7 && king.col - 1 >= 0 &&
+                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col - 1))
             {
-                changeBoard(newBoard, king.row, king.col, king.row + 1, king.col - 1);
-                if (blackPieceIsSafe(newBoard, king.row + 1, king.col - 1))
-                {
-                    return false;
-                }
+                return false;
             }
         }
         else
