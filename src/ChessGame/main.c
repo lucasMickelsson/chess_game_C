@@ -369,11 +369,21 @@ void chessGameGo(int chessMode)
             printf("Player 1 choosed to end the game\n\n");
             break;
         }
+        else if (checkMate(chessBoard, BLACK))
+        {
+            printf("The game is over and player 1 White wins!\n");
+            break;
+        }
         printBoard(chessBoard);
         temp = player2(chessBoard);
         if (temp == -1)
         {
             printf("Player 2 choosed to end the game\n\n");
+            break;
+        }
+        else if (checkMate(chessBoard, WHITE))
+        {
+            printf("The game is over and player 2 Black wins!\n");
             break;
         }
     }
