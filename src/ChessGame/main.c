@@ -371,7 +371,9 @@ void chessGameGo(int chessMode)
         }
         else if (checkMate(chessBoard, BLACK))
         {
-            printf("The game is over and player 1 White wins!\n");
+            printBoard(chessBoard);
+            printf("\nThe game is over and player 1 White wins!\n\n");
+            confirm();
             break;
         }
         printBoard(chessBoard);
@@ -383,7 +385,9 @@ void chessGameGo(int chessMode)
         }
         else if (checkMate(chessBoard, WHITE))
         {
-            printf("The game is over and player 2 Black wins!\n");
+            printBoard(chessBoard);
+            printf("\nThe game is over and player 2 Black wins!\n\n");
+            confirm();
             break;
         }
     }

@@ -862,61 +862,12 @@ bool blackPieceIsSafe(char board[8][8], int row, int col)
 
 bool checkMate(char board[8][8], int color)
 {
-    struct coord king;
     /*Checkmate will happen if king is threated and the player can not block it and not
     knock the piece out*/
     if (isBlack(color))
     {
-        // First check if we can knock the piece or block the piece
-        // Find the black king
-        king = findPiece(board, BLACK, KING);
         if (kingInCheck(board, BLACK)) // In order to check for chess mate the king has to be threated
         {
-            // Check if we can move king to a place were its safe maximum of 8 positions
-            if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col) &&
-                king.row + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col + 1) &&
-                     king.row + 1 <= 7 && king.col + 1 <= 7 &&
-                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row, king.col + 1) &&
-                     king.col + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col + 1) &&
-                     king.col + 1 <= 7 && king.row - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col) &&
-                     king.row - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row - 1, king.col - 1) &&
-                     king.row - 1 >= 0 && king.col - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row - 1, king.col - 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row, king.col - 1) &&
-                     king.col - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row, king.col - 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING + BLACK, king.row, king.col, king.row + 1, king.col - 1) &&
-                     king.row + 1 <= 7 && king.col - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, BLACK, king.row + 1, king.col - 1))
-            {
-                return false;
-            }
             bool valid;
             char piece;
             for (int i = 0; i < 8; i++)
@@ -930,7 +881,7 @@ bool checkMate(char board[8][8], int color)
                         {
                             for (int x = 0; x < 8; x++)
                             {
-                                valid = validMoves(board, piece + BLACK, i, j, y, x);
+                                valid = validMoves(board, piece, i, j, y, x);
                                 if (valid && !kingIsCheckInMove(board, i, j, BLACK, y, x))
                                 {
                                     return false;
@@ -947,56 +898,10 @@ bool checkMate(char board[8][8], int color)
             return false;
         }
     }
-    else if (isWhite(color))
+    else if (color == WHITE)
     {
-        king = findPiece(board, WHITE, KING);
         if (kingInCheck(board, WHITE)) // In order to check for chess mate the king has to be threated
         {
-            // Check if we can move king to a place were its safe maximum of 8 positions
-            if (validMoves(board, KING, king.row, king.col, king.row + 1, king.col) &&
-                king.row + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row + 1, king.col))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row + 1, king.col + 1) &&
-                     king.row + 1 <= 7 && king.col + 1 <= 7 &&
-                     !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row + 1, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row, king.col + 1) &&
-                     king.col + 1 <= 7 && !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row - 1, king.col + 1) &&
-                     king.col + 1 <= 7 && king.row - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row - 1, king.col + 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row - 1, king.col) &&
-                     king.row - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row - 1, king.col))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row - 1, king.col - 1) &&
-                     king.row - 1 >= 0 && king.col - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row - 1, king.col - 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row, king.col - 1) &&
-                     king.col - 1 >= 0 && !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row, king.col - 1))
-            {
-                return false;
-            }
-            else if (validMoves(board, KING, king.row, king.col, king.row + 1, king.col - 1) &&
-                     king.row + 1 <= 7 && king.col - 1 >= 0 &&
-                     !kingIsCheckInMove(board, king.row, king.col, WHITE, king.row + 1, king.col - 1))
-            {
-                return false;
-            }
             bool valid;
             char piece;
             for (int i = 0; i < 8; i++)
@@ -1010,7 +915,7 @@ bool checkMate(char board[8][8], int color)
                         {
                             for (int x = 0; x < 8; x++)
                             {
-                                valid = validMoves(board, piece + WHITE, i, j, y, x);
+                                valid = validMoves(board, piece, i, j, y, x);
                                 if (valid && !kingIsCheckInMove(board, i, j, WHITE, y, x))
                                 {
                                     return false;
@@ -1022,12 +927,15 @@ bool checkMate(char board[8][8], int color)
             }
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
     else
     {
         return false;
     }
-    return false;
 }
 struct coord findPiece(char board[8][8], char color, char piece)
 {
