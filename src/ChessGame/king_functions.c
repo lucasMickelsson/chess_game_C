@@ -13,19 +13,10 @@ bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRo
     changeBoard(tempBoard, row, col, moveRow, moveCol); // Make the planning move and check for threat
     if (kingInCheck(tempBoard, color))
     {
-        if (getPieceAtPosition(board, row, col) == KING + color)
-        {
-            printf("The king will enter a square where it get threated, invalid!\n");
-        }
-        else
-        {
-            printf("The king is still in danger\n");
-        }
         return true;
     }
     else
     {
-        // changeBoard(board, row, col, moveRow, moveCol);
         return false;
     }
 }
@@ -67,6 +58,7 @@ int moveThreatedKing(char board[8][8], char color, char player)
                 {
                     if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
                     {
+                        printf("The king is still in danger after that move\n");
                         moveThreatedKing(board, color, player);
                     }
                     else
@@ -86,6 +78,7 @@ int moveThreatedKing(char board[8][8], char color, char player)
                 {
                     if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
                     {
+                        printf("The king is still in danger after that move\n");
                         moveThreatedKing(board, color, player);
                     }
                     else

@@ -219,7 +219,15 @@ int player1(char board[8][8])
                     }
                     else
                     {
+                        char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                         changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        if (kingInCheck(board, WHITE))
+                        {
+                            printf("The white king will enter a square where it get threated, invalid!\n");
+                            setPieceAtPosition(board, pieceStart, p1.row, p1.col);
+                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            player1(board);
+                        }
                     }
                 }
             }
@@ -314,6 +322,7 @@ int player2(char board[8][8])
                 }
                 else
                 {
+                    char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
@@ -322,6 +331,13 @@ int player2(char board[8][8])
                     else
                     {
                         changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        if (kingInCheck(board, BLACK))
+                        {
+                            printf("The king will be threated after that move!\n");
+                            setPieceAtPosition(board, pieceStart, p1.row, p1.col);
+                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            player2(board);
+                        }
                     }
                 }
             }
