@@ -385,6 +385,10 @@ void chessGameGo(int chessMode)
             printf("Player 1 choosed to end the game\n\n");
             break;
         }
+        else if (gameEndsIndraw(chessBoard))
+        {
+            printf("The game ended in a draw no winner!");
+        }
         else if (checkMate(chessBoard, BLACK))
         {
             printBoard(chessBoard);
@@ -398,6 +402,10 @@ void chessGameGo(int chessMode)
         {
             printf("Player 2 choosed to end the game\n\n");
             break;
+        }
+        else if (gameEndsIndraw(chessBoard))
+        {
+            printf("The game ended in a draw no winner!");
         }
         else if (checkMate(chessBoard, WHITE))
         {

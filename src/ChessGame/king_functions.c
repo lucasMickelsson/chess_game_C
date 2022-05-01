@@ -861,30 +861,15 @@ bool checkMate(char board[8][8], int color)
     {
         if (kingInCheck(board, BLACK)) // In order to check for chess mate the king has to be threated
         {
-            bool valid;
-            char piece;
-            for (int i = 0; i < 8; i++)
+            // We check the entire chessboard and se if we can stop the threat by any piece
+            if (checkForAnyLegalMove(board, BLACK))
             {
-                for (int j = 0; j < 8; j++)
-                {
-                    piece = getPieceAtPosition(board, i, j);
-                    if (isBlack(piece))
-                    {
-                        for (int y = 0; y < 8; y++)
-                        {
-                            for (int x = 0; x < 8; x++)
-                            {
-                                valid = validMoves(board, piece, i, j, y, x);
-                                if (valid && !kingIsCheckInMove(board, i, j, BLACK, y, x))
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
+                return false;
             }
-            return true;
+            else
+            {
+                return true; // We didnt find any way to stop it. Checkmate is true
+            }
         }
         else
         {
@@ -895,35 +880,97 @@ bool checkMate(char board[8][8], int color)
     {
         if (kingInCheck(board, WHITE)) // In order to check for chess mate the king has to be threated
         {
-            bool valid;
-            char piece;
-            for (int i = 0; i < 8; i++)
+            if (checkForAnyLegalMove(board, WHITE))
             {
-                for (int j = 0; j < 8; j++)
-                {
-                    piece = getPieceAtPosition(board, i, j);
-                    if (isWhite(piece))
-                    {
-                        for (int y = 0; y < 8; y++)
-                        {
-                            for (int x = 0; x < 8; x++)
-                            {
-                                valid = validMoves(board, piece, i, j, y, x);
-                                if (valid && !kingIsCheckInMove(board, i, j, WHITE, y, x))
-                                {
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
+                return false;
             }
-            return true;
+            else
+            {
+                return true;
+            }
         }
         else
         {
             return false;
         }
+    }
+    else
+    {
+        return false;
+    }
+}
+bool checkForAnyLegalMove(char board[8][8], char color)
+{
+    bool valid;
+    char piece;
+    if (isBlack(color))
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                piece = getPieceAtPosition(board, i, j);
+                if (isBlack(piece))
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        for (int x = 0; x < 8; x++)
+                        {
+                            valid = validMoves(board, piece, i, j, y, x);
+                            if (valid && !kingIsCheckInMove(board, i, j, BLACK, y, x))
+                            {
+                                return true; // if we finded a valid move which stops the threat there are no checkmate
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    else if (color == WHITE)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                piece = getPieceAtPosition(board, i, j);
+                if (isWhite(piece))
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        for (int x = 0; x < 8; x++)
+                        {
+                            valid = validMoves(board, piece, i, j, y, x);
+                            if (valid && !kingIsCheckInMove(board, i, j, WHITE, y, x))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool gameEndsIndraw(char board[8][8])
+{
+    /*A chessgame will end in a draw if a player has no legal moves left but the king is not threated.
+    Another case is when the game is in a situation where checkmate is impossible*/
+    // No legal moves left
+    if ((!checkForAnyLegalMove(board, BLACK) && !kingInCheck(board, BLACK)) ||
+        (!checkForAnyLegalMove(board, WHITE) && !kingInCheck(board, WHITE)))
+    {
+        return true;
+    }
+    else if (countPiecesOnBoard(board) == 2) // We only have the kings left. Impossible way for checkmate
+    {
+        return true;
     }
     else
     {
