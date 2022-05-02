@@ -106,7 +106,8 @@ void handleChessOptions()
             break;
 
         case 2:
-            // selectNumbOfPlayers(option);
+            print2PlayerModeInfo();
+            chessGameGo(option);
             break;
 
         case 3:
@@ -373,7 +374,14 @@ void chessGameGo(int chessMode)
 {
     // a_piece *newList = create_list();
     char chessBoard[8][8];
-    initChessBoard(chessBoard);
+    if (chessMode == 1)
+    {
+        initChessBoard(chessBoard);
+    }
+    else if (chessMode == 2)
+    {
+        initPawnChessboard(chessBoard);
+    }
     bool go = true;
     int temp;
     while (go)

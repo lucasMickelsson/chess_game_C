@@ -84,4 +84,5 @@ bool isWhite(char pieceId);
 bool isBlack(char pieceId);
 void copyBoard(char oldBoard[8][8], char aCopy[8][8]);
 int countPiecesOnBoard(char board[8][8]);
+void initPawnChessboard(char board[8][8]);
 #endif

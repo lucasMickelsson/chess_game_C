@@ -42,9 +42,51 @@ void initChessBoard(char board[8][8])
     board[7][6] = HORSE + BLACK;
     board[7][7] = TOWER + BLACK;
 }
+void initPawnChessboard(char board[8][8])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (i == 4)
+        {
+            board[0][i] = KING; // We put the white king in the game
+        }
+        else
+        {
+            board[0][i] = EMPTY;
+        }
+    }
+    for (int i = 0, x = 0; i < 8; i++, x++)
+    {
+        board[1][x] = PAWN; // White pawns
+    }
+    for (int y = 2; y < 6; y++)
+    {
+        for (int x = 0; x < 8; x++)
+        {
+            board[y][x] = EMPTY; // all empty squares
+        }
+    }
+    for (int i = 0, x = 0; i < 8; i++, x++)
+    {
+        board[6][x] = PAWN + BLACK; // black pawns
+    }
+    for (int i = 0; i < 8; i++)
+    {
+        if (i == 4)
+        {
+            board[7][i] = KING + BLACK; // We put the black king in the game
+        }
+        else
+        {
+            board[7][i] = EMPTY;
+        }
+    }
+}
+
 void printBoard(char board[8][8])
 {
     char pieceId;
+    system("cls");
     printChessBoardLines();
     printf("\n");
     for (int i = 7; i >= 0; i--)
