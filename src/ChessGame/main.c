@@ -106,7 +106,7 @@ void handleChessOptions()
             break;
 
         case 2:
-            print2PlayerModeInfo();
+            printPawnChessInfo();
             chessGameGo(option);
             break;
 
@@ -129,14 +129,25 @@ void confirm()
 void print2PlayerModeInfo()
 {
     clearScreen();
-    printf("\n\nWelcome to 2-player chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
+    printf("\n\nWelcome to classic chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
     printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
-    printf("enter 'quit' to leave the mode while playing\n\n");
+    printf("enter 'quit' to leave the mode\n\n");
     confirm();
     clear_buffer();
 }
-
+void printPawnChessInfo()
+{
+    clearScreen();
+    printf("\n\nWelcome to pawm chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
+    printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
+    printf("Your mission to win the game is to make it to the final row using a random pawn\n");
+    printf("When a pawn have reached to the final row it will turn to a randomly choosen piece(Queen, Bishop, Tower, Horse)\n");
+    printf("Player 1 plays as white while player 2 plays as black\n");
+    printf("enter 'quit' to leave the mode\n\n");
+    confirm();
+    clear_buffer();
+}
 int player1(char board[8][8])
 {
     char command[10];
@@ -396,6 +407,8 @@ void chessGameGo(int chessMode)
         else if (gameEndsIndraw(chessBoard))
         {
             printf("The game ended in a draw no winner!");
+            confirm();
+            break;
         }
         else if (checkMate(chessBoard, BLACK))
         {
@@ -414,6 +427,8 @@ void chessGameGo(int chessMode)
         else if (gameEndsIndraw(chessBoard))
         {
             printf("The game ended in a draw no winner!");
+            confirm();
+            break;
         }
         else if (checkMate(chessBoard, WHITE))
         {

@@ -15,6 +15,7 @@ void printStart(void);
 void printMenyOptions();
 void clear_buffer();
 void print2PlayerModeInfo();
+void printPawnChessInfo();
 void confirm();
 void chessGameGo(int chessMode);
 void readString(char array[], int size);
