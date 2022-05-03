@@ -139,7 +139,7 @@ void print2PlayerModeInfo()
 void printPawnChessInfo()
 {
     clearScreen();
-    printf("\n\nWelcome to pawm chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
+    printf("\n\nWelcome to pawn chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
     printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("Your mission to win the game is to make it to the final row using a random pawn\n");
     printf("When a pawn have reached to the final row it will turn to a randomly choosen piece(Queen, Bishop, Tower, Horse)\n");
@@ -239,6 +239,11 @@ int player1(char board[8][8])
                             setPieceAtPosition(board, pieceStart, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
                             player1(board);
+                        }
+                        else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN &&
+                                 p2.row == 7)
+                        {
+                            pawnLastPosStatusSet(board, p2.row, p2.col);
                         }
                     }
                 }
@@ -350,6 +355,11 @@ int player2(char board[8][8])
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
                             player2(board);
                         }
+                        else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN + BLACK &&
+                                 p2.row == 0)
+                        {
+                            pawnLastPosStatusSet(board, p2.row, p2.col);
+                        }
                     }
                 }
             }
@@ -367,6 +377,27 @@ int player2(char board[8][8])
     else
     {
         return 1;
+    }
+}
+void pawnLastPosStatusSet(char board[8][8], int row, int col)
+{
+    int choice;
+    printf("The pawn has enter the last position of the chessboard\n");
+    printf("The pawn will now change to any one of the following pieces:\n");
+    printf("Tower=2, Horse=3, Bishop=4, Queen=5\n");
+    do
+    {
+        choice = user_selection();
+        clear_buffer();
+    } while (choice < 2 || choice > 5);
+
+    if (isBlack(getPieceAtPosition(board, row, col)))
+    {
+        setPieceAtPosition(board, choice + BLACK, row, col);
+    }
+    else
+    {
+        setPieceAtPosition(board, choice, row, col);
     }
 }
 bool equalStrings(char *string1, char *string2)
