@@ -432,8 +432,16 @@ void chessGameGo(int chessMode)
         temp = player1(chessBoard);
         if (temp == -1)
         {
-            printf("Player 1 choosed to end the game\n\n");
-            break;
+            printf("Player 1 want to quit the game!\n");
+            printf("Player 2 would you accept it? Enter y for yes?\n");
+            if (confirmQuitGame())
+            {
+                break;
+            }
+            else
+            {
+                continue;
+            }
         }
         else if (gameEndsIndraw(chessBoard))
         {
@@ -452,8 +460,16 @@ void chessGameGo(int chessMode)
         temp = player2(chessBoard);
         if (temp == -1)
         {
-            printf("Player 2 choosed to end the game\n\n");
-            break;
+            printf("Player 2 want to quit the game!\n");
+            printf("Player 1 would you accept it? Enter y for yes?\n");
+            if (confirmQuitGame())
+            {
+                break;
+            }
+            else
+            {
+                continue;
+            }
         }
         else if (gameEndsIndraw(chessBoard))
         {
@@ -468,6 +484,20 @@ void chessGameGo(int chessMode)
             confirm();
             break;
         }
+    }
+}
+bool confirmQuitGame()
+{
+    char choice;
+    scanf(" %c", &choice);
+    clear_buffer();
+    if (choice == 'y')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

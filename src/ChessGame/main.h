@@ -24,5 +24,6 @@ int player2(char board[8][8]);
 bool equalStrings(char *string1, char *string2);
 void clearScreen(void);
 void pawnLastPosStatusSet(char board[8][8], int row, int col);
+bool confirmQuitGame();
 
 #endif
