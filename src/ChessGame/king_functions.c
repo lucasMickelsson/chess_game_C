@@ -963,14 +963,33 @@ bool gameEndsIndraw(char board[8][8])
     /*A chessgame will end in a draw if a player has no legal moves left but the king is not threated.
     Another case is when the game is in a situation where checkmate is impossible*/
     // No legal moves left
-    if ((!checkForAnyLegalMove(board, BLACK) && !kingInCheck(board, BLACK)) ||
-        (!checkForAnyLegalMove(board, WHITE) && !kingInCheck(board, WHITE)))
+    struct coord a_piece, second;
+    int pieces[2] = {HORSE, BISHOP};
+    if (!checkForAnyLegalMove(board, BLACK) && !kingInCheck(board, BLACK))
+    {
+        return true;
+    }
+    else if (!checkForAnyLegalMove(board, WHITE) && !kingInCheck(board, WHITE))
     {
         return true;
     }
     else if (countPiecesOnBoard(board) == 2) // We only have the kings left. Impossible way for checkmate
     {
         return true;
+    }
+    else if (countPiecesOnBoard(board) == 3)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            a_piece = findPiece(board, BLACK, pieces[i]);
+            second = findPiece(board, WHITE, pieces[i]);
+            if (getPieceAtPosition(board, a_piece.row, a_piece.col) == pieces[i] + BLACK ||
+                getPieceAtPosition(board, second.row, second.col) == pieces[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
     else
     {
