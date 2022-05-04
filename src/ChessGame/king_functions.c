@@ -6,8 +6,7 @@
 #include "piece_functions.h"
 #include "main.h"
 
-int kingStatusBlack = 0;
-int kingStatusWhite = 0;
+int kingStatusBlack = 0, kingStatusWhite = 0, towerWhiteStatus = 0, towerBlackStatus = 0;
 
 bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
 {
@@ -445,8 +444,11 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                 board[row][col + 3] == BLACK + TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, BLACK, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2))
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2) &&
+                    row == moveRow && col + 2 == moveCol)
                 {
+                    kingStatusBlack++;
+                    towerBlackStatus++;
                     return true;
                 }
             }
@@ -454,8 +456,11 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                      board[row][col - 4] == BLACK + TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, BLACK, row, col - 1) &&
-                    !kingIsCheckInMove(board, row, col, BLACK, row, col - 2))
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col - 2) &&
+                    row == moveRow && col - 2 == moveCol)
                 {
+                    kingStatusBlack++;
+                    towerBlackStatus++;
                     return true;
                 }
             }
@@ -474,8 +479,11 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                 board[row][col + 3] == TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, WHITE, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2))
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2) &&
+                    row == moveRow && col + 2 == moveCol)
                 {
+                    kingStatusWhite++;
+                    towerWhiteStatus++;
                     return true;
                 }
             }
@@ -483,8 +491,11 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                      board[row][col - 4] == TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, WHITE, row, col - 1) &&
-                    !kingIsCheckInMove(board, row, col, WHITE, row, col - 2))
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col - 2) &&
+                    row == moveRow && col - 2 == moveCol)
                 {
+                    kingStatusWhite++;
+                    towerWhiteStatus++;
                     return true;
                 }
             }
