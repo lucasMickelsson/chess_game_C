@@ -6,6 +6,9 @@
 #include "piece_functions.h"
 #include "main.h"
 
+int kingStatusBlack = 0;
+int kingStatusWhite = 0;
+
 bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
 {
     char tempBoard[8][8];
@@ -430,6 +433,68 @@ bool whitePieceIsSafe(char board[8][8], int row, int col)
         // empty square
         return true;
     }
+}
+bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
+{
+    if (isBlack(color))
+    {
+        if (!kingInCheck(board, color) && kingStatusBlack == 0 &&
+            board[row][col] == KING + BLACK && row == 7 && col == 4)
+        {
+            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
+                board[row][col + 3] == BLACK + TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, BLACK, row, col + 1) &&
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2))
+                {
+                    return true;
+                }
+            }
+            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 4] == BLACK + TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, BLACK, row, col - 1) &&
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col - 2))
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (!kingInCheck(board, color) && kingStatusBlack == 0 &&
+            board[row][col] == KING && row == 0 && col == 4)
+        {
+            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
+                board[row][col + 3] == TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, WHITE, row, col + 1) &&
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2))
+                {
+                    return true;
+                }
+            }
+            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 4] == TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, WHITE, row, col - 1) &&
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col - 2))
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
 }
 
 bool checkWhiteKingMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
@@ -977,7 +1042,7 @@ bool gameEndsIndraw(char board[8][8])
     {
         return true;
     }
-    else if (countPiecesOnBoard(board) == 3)
+    else if (countPiecesOnBoard(board) == 3) // check if we have a Bishop or a Horse together with the kings
     {
         for (int i = 0; i < 2; i++)
         {
