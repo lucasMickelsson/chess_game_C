@@ -210,6 +210,7 @@ int player1(char board[8][8])
                     if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
                         kingStatusWhite == 0 && tower1WhiteStatus == 0 && p2.col == 2)
                     {
+                        DEBUG("We make a rocked move using left tower");
                         makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
                         kingStatusWhite++;
                         break;
@@ -217,6 +218,7 @@ int player1(char board[8][8])
                     else if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
                              kingStatusWhite == 0 && tower2WhiteStatus == 0 && p2.col == 6)
                     {
+                        DEBUG("We make a rocked move using right tower");
                         makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
                         kingStatusWhite++;
                         break;
@@ -224,6 +226,7 @@ int player1(char board[8][8])
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
+                        DEBUG("invalid move");
                         printf("The chess move is invalid, try again: ");
                     }
                     else
@@ -295,8 +298,8 @@ int player2(char board[8][8])
     char command[10];
     bool validMove = false;
     char *end, *start;
-    struct coord p1, p2;
     int result;
+    struct coord p1, p2;
 
     if (kingInCheck(board, BLACK))
     {
@@ -311,9 +314,10 @@ int player2(char board[8][8])
             return 1;
         }
     }
-    printf("\nPlayer 2 Turn:\n");
 
+    printf("\nPlayer 2 Turn:\n");
     printf("Enter chess move to make(startPos endPos): ");
+
     do
     {
         readString(command, 10);
@@ -327,24 +331,37 @@ int player2(char board[8][8])
 
         if (start == NULL || end == NULL)
         {
-            printf("Invalid input for chess move try again: ");
+            printf("Invalid input for chess move try again in this format(startPos endPos): ");
         }
         else if (positionStrings(start) && positionStrings(end))
         {
-
             p1 = getChessIndex(start);
             p2 = getChessIndex(end);
             char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
             validMove = isBlack(pieceStart);
             if (!validMove)
             {
-                printf("Not a valid piece for player 2, should use black pieces: ");
+                printf("Not a valid piece for player 2, should use white pieces: ");
             }
             else
             {
                 if (pieceStart == KING + BLACK)
                 {
                     char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
+                    if (checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
+                        kingStatusBlack == 0 && tower1BlackStatus == 0 && p2.col == 2)
+                    {
+                        makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                        kingStatusBlack++;
+                        break;
+                    }
+                    else if (checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
+                             kingStatusBlack == 0 && tower2BlackStatus == 0 && p2.col == 6)
+                    {
+                        makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                        kingStatusBlack++;
+                        break;
+                    }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
@@ -355,16 +372,16 @@ int player2(char board[8][8])
                         changeBoard(board, p1.row, p1.col, p2.row, p2.col);
                         if (kingInCheck(board, BLACK))
                         {
-                            printf("The king will enter a square where it get threated, invalid!\n");
+                            printf("The black king will enter a square where it get threated, invalid!\n");
                             setPieceAtPosition(board, KING + BLACK, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
-                            player2(board);
+                            player1(board);
                         }
+                        kingStatusBlack++;
                     }
                 }
                 else
                 {
-                    char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
@@ -372,13 +389,22 @@ int player2(char board[8][8])
                     }
                     else
                     {
+                        char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                         changeBoard(board, p1.row, p1.col, p2.row, p2.col);
                         if (kingInCheck(board, BLACK))
                         {
-                            printf("The king will be threated after that move!\n");
+                            printf("The black king will enter a square where it get threated, invalid!\n");
                             setPieceAtPosition(board, pieceStart, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
-                            player2(board);
+                            player1(board);
+                        }
+                        else if (pieceStart == TOWER + BLACK && p1.col == 0)
+                        {
+                            tower1BlackStatus++;
+                        }
+                        else if (pieceStart == TOWER + BLACK && p1.col == 7)
+                        {
+                            tower2BlackStatus++;
                         }
                         else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN + BLACK &&
                                  p2.row == 0)
