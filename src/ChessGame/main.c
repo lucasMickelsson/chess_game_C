@@ -208,9 +208,15 @@ int player1(char board[8][8])
                 {
                     char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
                     if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
-                        kingStatusWhite == 0 && tower1WhiteStatus == 0 && tower2WhiteStatus == 0)
+                        kingStatusWhite == 0 && tower1WhiteStatus == 0 && p2.col == 2)
                     {
-                        printf("We made the rocked move\n");
+                        makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                        kingStatusWhite++;
+                        break;
+                    }
+                    else if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
+                             kingStatusWhite == 0 && tower2WhiteStatus == 0 && p2.col == 6)
+                    {
                         makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
                         kingStatusWhite++;
                         break;
