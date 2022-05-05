@@ -375,7 +375,7 @@ int player2(char board[8][8])
                             printf("The black king will enter a square where it get threated, invalid!\n");
                             setPieceAtPosition(board, KING + BLACK, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
-                            player1(board);
+                            player2(board);
                         }
                         kingStatusBlack++;
                     }
@@ -396,7 +396,7 @@ int player2(char board[8][8])
                             printf("The black king will enter a square where it get threated, invalid!\n");
                             setPieceAtPosition(board, pieceStart, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
-                            player1(board);
+                            player2(board);
                         }
                         else if (pieceStart == TOWER + BLACK && p1.col == 0)
                         {
