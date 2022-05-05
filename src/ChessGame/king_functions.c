@@ -6,8 +6,6 @@
 #include "piece_functions.h"
 #include "main.h"
 
-int kingStatusBlack = 0, kingStatusWhite = 0, towerWhiteStatus = 0, towerBlackStatus = 0;
-
 bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
 {
     char tempBoard[8][8];
@@ -433,81 +431,6 @@ bool whitePieceIsSafe(char board[8][8], int row, int col)
         return true;
     }
 }
-bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
-{
-    if (isBlack(color))
-    {
-        if (!kingInCheck(board, color) && kingStatusBlack == 0 &&
-            board[row][col] == KING + BLACK && row == 7 && col == 4)
-        {
-            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
-                board[row][col + 3] == BLACK + TOWER)
-            {
-                if (!kingIsCheckInMove(board, row, col, BLACK, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2) &&
-                    row == moveRow && col + 2 == moveCol)
-                {
-                    kingStatusBlack++;
-                    towerBlackStatus++;
-                    return true;
-                }
-            }
-            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
-                     board[row][col - 4] == BLACK + TOWER)
-            {
-                if (!kingIsCheckInMove(board, row, col, BLACK, row, col - 1) &&
-                    !kingIsCheckInMove(board, row, col, BLACK, row, col - 2) &&
-                    row == moveRow && col - 2 == moveCol)
-                {
-                    kingStatusBlack++;
-                    towerBlackStatus++;
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        if (!kingInCheck(board, color) && kingStatusBlack == 0 &&
-            board[row][col] == KING && row == 0 && col == 4)
-        {
-            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
-                board[row][col + 3] == TOWER)
-            {
-                if (!kingIsCheckInMove(board, row, col, WHITE, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2) &&
-                    row == moveRow && col + 2 == moveCol)
-                {
-                    kingStatusWhite++;
-                    towerWhiteStatus++;
-                    return true;
-                }
-            }
-            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
-                     board[row][col - 4] == TOWER)
-            {
-                if (!kingIsCheckInMove(board, row, col, WHITE, row, col - 1) &&
-                    !kingIsCheckInMove(board, row, col, WHITE, row, col - 2) &&
-                    row == moveRow && col - 2 == moveCol)
-                {
-                    kingStatusWhite++;
-                    towerWhiteStatus++;
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-    return false;
-}
-
 bool checkWhiteKingMoves(char board[8][8], int row, int col, int moveRow, int moveCol)
 {
     bool valid = false;

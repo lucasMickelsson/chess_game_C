@@ -12,6 +12,9 @@
 #define play1 1
 #define play2 2
 
+int kingStatusBlack = 0, kingStatusWhite = 0, tower1WhiteStatus = 0, tower1BlackStatus = 0,
+    tower2BlackStatus = 0, tower2WhiteStatus = 0;
+
 void printLines(void)
 {
     printf("\n");
@@ -206,6 +209,11 @@ int player1(char board[8][8])
                 if (pieceStart == KING)
                 {
                     char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
+                    if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
+                        kingStatusWhite == 0 && tower1WhiteStatus == 0 && tower2WhiteStatus == 0)
+                    {
+                        break;
+                    }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {

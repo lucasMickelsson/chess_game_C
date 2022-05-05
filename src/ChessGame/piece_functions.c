@@ -4,6 +4,85 @@
 #include "king_functions.h"
 #include "debug.h"
 
+bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
+{
+    if (isBlack(color))
+    {
+        if (!kingInCheck(board, color) &&
+            board[row][col] == KING + BLACK && row == 7 && col == 4)
+        {
+            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
+                board[row][col + 3] == BLACK + TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, BLACK, row, col + 1) &&
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2) &&
+                    row == moveRow && col + 2 == moveCol)
+                {
+                    changeBoard(board, row, col, moveRow, moveCol);
+                    setPieceAtPosition(board, TOWER, row, col + 1);
+                    setPieceAtPosition(board, EMPTY, row, col + 3);
+                    return true;
+                }
+            }
+            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 4] == BLACK + TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, BLACK, row, col - 1) &&
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col - 2) &&
+                    row == moveRow && col - 2 == moveCol)
+                {
+                    changeBoard(board, row, col, moveRow, moveCol);
+                    setPieceAtPosition(board, TOWER, row, col - 1);
+                    setPieceAtPosition(board, EMPTY, row, col - 4);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (!kingInCheck(board, color) &&
+            board[row][col] == KING && row == 0 && col == 4)
+        {
+            if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
+                board[row][col + 3] == TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, WHITE, row, col + 1) &&
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2) &&
+                    row == moveRow && col + 2 == moveCol)
+                {
+                    changeBoard(board, row, col, moveRow, moveCol);
+                    setPieceAtPosition(board, TOWER, row, col + 1);
+                    setPieceAtPosition(board, EMPTY, row, col + 3);
+                    return true;
+                }
+            }
+            else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 4] == TOWER)
+            {
+                if (!kingIsCheckInMove(board, row, col, WHITE, row, col - 1) &&
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col - 2) &&
+                    row == moveRow && col - 2 == moveCol)
+                {
+                    changeBoard(board, row, col, moveRow, moveCol);
+                    setPieceAtPosition(board, TOWER, row, col - 1);
+                    setPieceAtPosition(board, EMPTY, row, col - 4);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+}
+
 bool validMoves(char board[8][8], char piece, int startRow, int startCol, int moveRow, int moveCol)
 {
     bool isValidMove = true;
@@ -22,7 +101,6 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
         }
         else if (piece == BLACK + KING)
         {
-            // We have to add control if king is save
             isValidMove = checkBlackKingMoves(board, startRow, startCol, moveRow, moveCol);
             return isValidMove;
         }
@@ -41,7 +119,6 @@ bool validMoves(char board[8][8], char piece, int startRow, int startCol, int mo
         isValidMove = checkQueenMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case KING:
-        // We have to add control if king is save
         isValidMove = checkWhiteKingMoves(board, startRow, startCol, moveRow, moveCol);
         break;
     case BISHOP:
