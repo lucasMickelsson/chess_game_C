@@ -227,6 +227,7 @@ int player1(char board[8][8])
                     if (!validMove)
                     {
                         DEBUG("invalid move");
+                        // printf("kingstatusWhite: %d, tower1Whitestatus: %d, tower2Whitestatus: %d\n", kingStatusWhite, tower1WhiteStatus, tower2WhiteStatus);
                         printf("The chess move is invalid, try again: ");
                     }
                     else
