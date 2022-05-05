@@ -4,6 +4,38 @@
 #include "king_functions.h"
 #include "debug.h"
 
+void makeRockMove(char board[8][8], int color, int row, int col, int moveRow, int moveCol)
+{
+    if (isBlack(color))
+    {
+        changeBoard(board, row, col, moveRow, moveCol);
+        if (board[row][moveCol + 1] == TOWER + BLACK)
+        {
+            setPieceAtPosition(board, TOWER + BLACK, row, col + 1);
+            setPieceAtPosition(board, EMPTY, row, col + 3);
+        }
+        else if (board[row][moveCol - 2] == TOWER + BLACK)
+        {
+            setPieceAtPosition(board, TOWER + BLACK, row, col - 1);
+            setPieceAtPosition(board, EMPTY, row, col - 4);
+        }
+    }
+    else
+    {
+        changeBoard(board, row, col, moveRow, moveCol);
+        if (board[row][moveCol + 1] == TOWER)
+        {
+            setPieceAtPosition(board, TOWER, row, col + 1);
+            setPieceAtPosition(board, EMPTY, row, col + 3);
+        }
+        else if (board[row][moveCol - 2] == TOWER)
+        {
+            setPieceAtPosition(board, TOWER, row, col - 1);
+            setPieceAtPosition(board, EMPTY, row, col - 4);
+        }
+    }
+}
+
 bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
 {
     if (isBlack(color))
@@ -18,9 +50,6 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                     !kingIsCheckInMove(board, row, col, BLACK, row, col + 2) &&
                     row == moveRow && col + 2 == moveCol)
                 {
-                    changeBoard(board, row, col, moveRow, moveCol);
-                    setPieceAtPosition(board, TOWER, row, col + 1);
-                    setPieceAtPosition(board, EMPTY, row, col + 3);
                     return true;
                 }
             }
@@ -31,9 +60,6 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                     !kingIsCheckInMove(board, row, col, BLACK, row, col - 2) &&
                     row == moveRow && col - 2 == moveCol)
                 {
-                    changeBoard(board, row, col, moveRow, moveCol);
-                    setPieceAtPosition(board, TOWER, row, col - 1);
-                    setPieceAtPosition(board, EMPTY, row, col - 4);
                     return true;
                 }
             }
@@ -55,9 +81,6 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                     !kingIsCheckInMove(board, row, col, WHITE, row, col + 2) &&
                     row == moveRow && col + 2 == moveCol)
                 {
-                    changeBoard(board, row, col, moveRow, moveCol);
-                    setPieceAtPosition(board, TOWER, row, col + 1);
-                    setPieceAtPosition(board, EMPTY, row, col + 3);
                     return true;
                 }
             }
@@ -68,9 +91,6 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
                     !kingIsCheckInMove(board, row, col, WHITE, row, col - 2) &&
                     row == moveRow && col - 2 == moveCol)
                 {
-                    changeBoard(board, row, col, moveRow, moveCol);
-                    setPieceAtPosition(board, TOWER, row, col - 1);
-                    setPieceAtPosition(board, EMPTY, row, col - 4);
                     return true;
                 }
             }

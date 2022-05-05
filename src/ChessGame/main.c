@@ -175,9 +175,8 @@ int player1(char board[8][8])
     }
 
     printf("\nPlayer 1 Turn:\n");
-
     printf("Enter chess move to make(startPos endPos): ");
-    // here we have to add functions for checking input
+
     do
     {
         readString(command, 10);
@@ -197,7 +196,6 @@ int player1(char board[8][8])
         {
             p1 = getChessIndex(start);
             p2 = getChessIndex(end);
-            // printf("Coors are %d %d\n", p1.row, p1.col);
             char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
             validMove = isWhite(pieceStart);
             if (!validMove)
@@ -212,6 +210,9 @@ int player1(char board[8][8])
                     if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
                         kingStatusWhite == 0 && tower1WhiteStatus == 0 && tower2WhiteStatus == 0)
                     {
+                        printf("We made the rocked move\n");
+                        makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                        kingStatusWhite++;
                         break;
                     }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
@@ -229,6 +230,7 @@ int player1(char board[8][8])
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
                             player1(board);
                         }
+                        kingStatusWhite++;
                     }
                 }
                 else
@@ -248,6 +250,14 @@ int player1(char board[8][8])
                             setPieceAtPosition(board, pieceStart, p1.row, p1.col);
                             setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
                             player1(board);
+                        }
+                        else if (pieceStart == TOWER && p1.col == 0)
+                        {
+                            tower1WhiteStatus++;
+                        }
+                        else if (pieceStart == TOWER && p1.col == 7)
+                        {
+                            tower2WhiteStatus++;
                         }
                         else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN &&
                                  p2.row == 7)
@@ -502,6 +512,8 @@ void chessGameGo(int chessMode)
             }
         }
     }
+    tower1WhiteStatus = 0, tower2WhiteStatus = 0, kingStatusWhite = 0, kingStatusBlack = 0,
+    tower1BlackStatus = 0, tower2BlackStatus = 0;
 }
 bool confirmQuitGame()
 {

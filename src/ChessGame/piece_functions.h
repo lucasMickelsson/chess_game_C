@@ -105,5 +105,6 @@ bool checkQueenMoves(char board[8][8], int row, int col, int moveRow, int moveCo
 bool checkWhiteHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
 bool checkBlackHorseMoves(char board[8][8], int row, int col, int moveRow, int moveCol);
 bool kingInCheck(char board[8][8], char colorKing);
+void makeRockMove(char board[8][8], int color, int row, int col, int moveRow, int moveCol);
 
 #endif
