@@ -21,24 +21,24 @@ king_functions.o: king_functions.c king_functions.h chessBoard.h piece_functions
 pieces_list.o: pieces_list.c pieces_list.h chessBoard.h
 	gcc $(CFLAGS) -c pieces_list.c -o pieces_list.o
 
-piece_functions.o: piece_functions.c piece_functions.h chessBoard.h king_functions.h debug.h
-	gcc $(CFLAGS) -c piece_functions.c -D DEBUGON -o piece_functions.o
+piece_functions.o: piece_functions.c piece_functions.h chessBoard.h king_functions.h
+	gcc $(CFLAGS) -c piece_functions.c -o piece_functions.o
 
 chessBoard.o: chessBoard.c chessBoard.h pieces_list.h
 	gcc $(CFLAGS) -c chessBoard.c -o chessBoard.o
 
-main.o: main.c main.h chessBoard.h piece_functions.h pieces_list.h king_functions.h debug.h
-	gcc $(CFLAGS) -c main.c -D DEBUGON -o main.o
+main.o: main.c main.h chessBoard.h piece_functions.h pieces_list.h king_functions.h
+	gcc $(CFLAGS) -c main.c -o main.o
 
 chess$(EXEEXT): main.o chessBoard.o piece_functions.o pieces_list.o king_functions.o
-	gcc $(CFLAGS) $(OBJ) -D DEBUGON -o chess
+	gcc $(CFLAGS) $(OBJ) -o chess
 
 chess: chess$(EXEEXT)
 
 all: chess$(EXEEXT) chessBoard_test$(EXEEXT) listTest$(EXEEXT)
 
 clean:
-	$(RM) $(BIN) $(OBJ) $(TESTOBJ)
+	$(RM) $(BIN) $(OBJ)
 # Test targets
 
 listTest$(EXEEXT): pieces_list.c pieces_list.h listTest.c chessBoard.h

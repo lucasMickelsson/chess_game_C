@@ -87,7 +87,7 @@ void initPawnChessboard(char board[8][8])
 void printBoard(char board[8][8], a_piece *head)
 {
     char pieceId;
-    // system("cls");
+    system("cls");
     printChessBoardLines();
     printf("\n");
     for (int i = 7; i >= 0; i--)
