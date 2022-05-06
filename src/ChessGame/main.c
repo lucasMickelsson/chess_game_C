@@ -207,27 +207,32 @@ int player1(char board[8][8])
                 if (pieceStart == KING)
                 {
                     char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
-                    if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
-                        kingStatusWhite == 0 && tower1WhiteStatus == 0 && p2.col == 2)
+                    if ((checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
+                         kingStatusWhite == 0) ||
+                        (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
+                         kingStatusWhite == 0))
                     {
-                        DEBUG("We make a rocked move using left tower");
-                        makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
-                        kingStatusWhite++;
-                        break;
-                    }
-                    else if (checkValidRockedMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
-                             kingStatusWhite == 0 && tower2WhiteStatus == 0 && p2.col == 6)
-                    {
-                        DEBUG("We make a rocked move using right tower");
-                        makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
-                        kingStatusWhite++;
-                        break;
+                        DEBUG("We finded valid rocked move tower");
+                        if (p2.row == 0 && p2.col == 2 && tower1WhiteStatus == 0)
+                        {
+                            DEBUG("We make a rocked move using left tower");
+                            makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                            kingStatusWhite++;
+                            break;
+                        }
+                        else if (p2.row == 0 && p2.col == 6 && tower2WhiteStatus == 0)
+                        {
+                            DEBUG("We make a rocked move using right tower");
+                            makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                            kingStatusWhite++;
+                            break;
+                        }
                     }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
                     {
                         DEBUG("invalid move");
-                        // printf("kingstatusWhite: %d, tower1Whitestatus: %d, tower2Whitestatus: %d\n", kingStatusWhite, tower1WhiteStatus, tower2WhiteStatus);
+                        printf("kingstatusWhite: %d, tower1Whitestatus: %d, tower2Whitestatus: %d\n", kingStatusWhite, tower1WhiteStatus, tower2WhiteStatus);
                         printf("The chess move is invalid, try again: ");
                     }
                     else
@@ -349,19 +354,26 @@ int player2(char board[8][8])
                 if (pieceStart == KING + BLACK)
                 {
                     char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
-                    if (checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
-                        kingStatusBlack == 0 && tower1BlackStatus == 0 && p2.col == 2)
+                    if ((checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
+                         kingStatusBlack == 0) ||
+                        (checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
+                         kingStatusBlack == 0))
                     {
-                        makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
-                        kingStatusBlack++;
-                        break;
-                    }
-                    else if (checkValidRockedMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
-                             kingStatusBlack == 0 && tower2BlackStatus == 0 && p2.col == 6)
-                    {
-                        makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
-                        kingStatusBlack++;
-                        break;
+                        DEBUG("We finded valid rocked move tower");
+                        if (p2.row == 7 && p2.col == 2 && tower1BlackStatus == 0)
+                        {
+                            DEBUG("We make a rocked move using left tower");
+                            makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                            kingStatusBlack++;
+                            break;
+                        }
+                        else if (p2.row == 0 && p2.col == 6 && tower2BlackStatus == 0)
+                        {
+                            DEBUG("We make a rocked move using right tower");
+                            makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                            kingStatusBlack++;
+                            break;
+                        }
                     }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)

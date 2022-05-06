@@ -44,16 +44,17 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
             board[row][col] == KING + BLACK && row == 7 && col == 4)
         {
             if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
-                board[row][col + 3] == BLACK + TOWER)
+                board[row][col + 3] == BLACK + TOWER &&
+                row == moveRow && col + 2 == moveCol)
             {
                 if (!kingIsCheckInMove(board, row, col, BLACK, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2) &&
-                    row == moveRow && col + 2 == moveCol)
+                    !kingIsCheckInMove(board, row, col, BLACK, row, col + 2))
                 {
                     return true;
                 }
             }
             else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 3] == EMPTY &&
                      board[row][col - 4] == BLACK + TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, BLACK, row, col - 1) &&
@@ -75,16 +76,16 @@ bool checkValidRockedMove(char board[8][8], int row, int col, int color, int mov
             board[row][col] == KING && row == 0 && col == 4)
         {
             if (board[row][col + 1] == EMPTY && board[row][col + 2] == EMPTY &&
-                board[row][col + 3] == TOWER)
+                board[row][col + 3] == TOWER && row == moveRow && col + 2 == moveCol)
             {
                 if (!kingIsCheckInMove(board, row, col, WHITE, row, col + 1) &&
-                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2) &&
-                    row == moveRow && col + 2 == moveCol)
+                    !kingIsCheckInMove(board, row, col, WHITE, row, col + 2))
                 {
                     return true;
                 }
             }
             else if (board[row][col - 1] == EMPTY && board[row][col - 2] == EMPTY &&
+                     board[row][col - 3] == EMPTY &&
                      board[row][col - 4] == TOWER)
             {
                 if (!kingIsCheckInMove(board, row, col, WHITE, row, col - 1) &&
