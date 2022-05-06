@@ -60,16 +60,15 @@ void printList(a_piece *head)
     a_piece *current = head;
     if (list_empty(head))
     {
-        printf("No pieces out of the game yet!\n");
+        printf("No pieces out of the game yet!");
     }
     else
     {
-        printf("Dead pieces:\n");
         while (current != NULL)
         {
             printPieceStrings(current->the_piece);
             printf(" ");
-            if (i % 5 == 0)
+            if (i % 10 == 0)
             {
                 printf("\n");
             }

@@ -138,7 +138,6 @@ void print2PlayerModeInfo()
     printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
     printf("enter 'quit' to leave the mode\n");
-    printf("enter 'show' to see all dead pieces\n\n");
     confirm();
     clear_buffer();
 }
@@ -152,7 +151,6 @@ void printPawnChessInfo()
     printf("(Queen, Bishop, Tower, Horse)\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
     printf("enter 'quit' to leave the mode\n");
-    printf("enter 'show' to see all dead pieces\n\n");
     confirm();
     clear_buffer();
 }
@@ -263,11 +261,6 @@ int player1(char board[8][8])
         if (strcmp(command, "quit") == 0)
         {
             break;
-        }
-        else if (strcmp(command, "show") == 0)
-        {
-            printList(the_list);
-            player1(board);
         }
 
         start = strtok(command, " ");
@@ -414,11 +407,6 @@ int player2(char board[8][8])
         if (equalStrings(command, "quit"))
         {
             break;
-        }
-        else if (strcmp(command, "show") == 0)
-        {
-            printList(the_list);
-            player2(board);
         }
 
         start = strtok(command, " ");
@@ -580,7 +568,7 @@ void chessGameGo(int chessMode)
     }
     while (go)
     {
-        printBoard(chessBoard);
+        printBoard(chessBoard, the_list);
         temp = player1(chessBoard);
         if (temp == -1)
         {
@@ -597,14 +585,14 @@ void chessGameGo(int chessMode)
         }
         else if (checkMate(chessBoard, BLACK))
         {
-            printBoard(chessBoard);
+            printBoard(chessBoard, the_list);
             printf("\nThe game is over and player 1 White wins!\n\n");
             confirm();
             break;
         }
         else if (!checkForAnyLegalMove(chessBoard, BLACK))
         {
-            printBoard(chessBoard);
+            printBoard(chessBoard, the_list);
             if (gameEndsIndraw(chessBoard))
             {
                 printf("\nThe game ended in a draw no winner!\n");
@@ -612,7 +600,7 @@ void chessGameGo(int chessMode)
                 break;
             }
         }
-        printBoard(chessBoard);
+        printBoard(chessBoard, the_list);
         temp = player2(chessBoard);
         if (temp == -1)
         {
@@ -629,14 +617,14 @@ void chessGameGo(int chessMode)
         }
         else if (checkMate(chessBoard, WHITE))
         {
-            printBoard(chessBoard);
+            printBoard(chessBoard, the_list);
             printf("\nThe game is over and player 2 Black wins!\n\n");
             confirm();
             break;
         }
         else if (!checkForAnyLegalMove(chessBoard, WHITE))
         {
-            printBoard(chessBoard);
+            printBoard(chessBoard, the_list);
             if (gameEndsIndraw(chessBoard))
             {
                 printf("\nThe game ended in a draw no winner!\n");

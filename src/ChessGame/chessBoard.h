@@ -30,7 +30,7 @@ void initChessBoard(char board[8][8]);
 /**
  * Function for printing the board on the screen
  */
-void printBoard(char board[8][8]);
+void printBoard(char board[8][8], a_piece *head);
 
 /**
  * @brief Get the Piece At Position on the chess board

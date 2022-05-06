@@ -84,7 +84,7 @@ void initPawnChessboard(char board[8][8])
     }
 }
 
-void printBoard(char board[8][8])
+void printBoard(char board[8][8], a_piece *head)
 {
     char pieceId;
     // system("cls");
@@ -106,7 +106,14 @@ void printBoard(char board[8][8])
         printChessBoardLines();
         printf("\n");
     }
-    printf("     A       B       C       D       E       F       G       H");
+    printf("     A       B       C       D       E       F       G       H\n");
+
+    printf("                        Dead pieces:\n");
+    printChessBoardLines();
+    printf("\n");
+    printList(head);
+    printf("\n");
+    printChessBoardLines();
 }
 char getPieceAtPosition(char board[8][8], int row, int col)
 {

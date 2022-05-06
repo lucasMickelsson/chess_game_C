@@ -30,7 +30,7 @@ int main(void)
 
     TEST_CASE("Print the board");
     printf("\n\n");
-    printBoard(board);
+    // printBoard(board);
 
     TEST_CASE("Ge coords for a chessboard via chess move");
     struct coord test;
@@ -54,10 +54,10 @@ int main(void)
 
     TEST_CASE("Change position between to pieces");
     // changeBoard(board, 0, 0, 4, 4);
-    printBoard(board);
+    // printBoard(board);
     printf("\n\n");
     // changeBoard(board, 1, 0, 3, 0);
-    printBoard(board);
+    // printBoard(board);
 
     char board2[8][8];
     initChessBoard(board2);
