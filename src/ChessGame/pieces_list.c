@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "pieces_list.h"
+#include "chessBoard.h"
 
 a_piece *create_list()
 {
@@ -51,4 +52,29 @@ a_piece *delete_list(a_piece *headptr)
     headptr = NULL;
 
     return headptr;
+}
+
+void printList(a_piece *head)
+{
+    int i = 1;
+    a_piece *current = head;
+    if (list_empty(head))
+    {
+        printf("No pieces out of the game yet!\n");
+    }
+    else
+    {
+        printf("Dead pieces:\n");
+        while (current != NULL)
+        {
+            printPieceStrings(current->the_piece);
+            printf(" ");
+            if (i % 5 == 0)
+            {
+                printf("\n");
+            }
+            i++;
+            current = current->next;
+        }
+    }
 }

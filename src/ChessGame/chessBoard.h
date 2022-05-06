@@ -1,6 +1,7 @@
 #ifndef CHESSBOARDH
 #define CHESSBOARDH
 #include <stdbool.h>
+#include "pieces_list.h"
 
 // every chess piece has been given an unique id
 // black pieces will have id defined= pieceID + 50
@@ -63,7 +64,7 @@ void printChessBoardLines();
  * @param newRow
  * @param newCol
  */
-void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol);
+a_piece *changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol, a_piece *head);
 
 /**
  * Function for checking if a string is a chess coordinate
@@ -85,4 +86,6 @@ bool isBlack(char pieceId);
 void copyBoard(char oldBoard[8][8], char aCopy[8][8]);
 int countPiecesOnBoard(char board[8][8]);
 void initPawnChessboard(char board[8][8]);
+void swap(char board[8][8], int oldRow, int oldCol, int newRow, int newCol);
+
 #endif

@@ -53,10 +53,10 @@ int main(void)
     VERIFY(!isWhite(EMPTY), "Its not a white piece");
 
     TEST_CASE("Change position between to pieces");
-    changeBoard(board, 0, 0, 4, 4);
+    // changeBoard(board, 0, 0, 4, 4);
     printBoard(board);
     printf("\n\n");
-    changeBoard(board, 1, 0, 3, 0);
+    // changeBoard(board, 1, 0, 3, 0);
     printBoard(board);
 
     char board2[8][8];

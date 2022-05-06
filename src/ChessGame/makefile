@@ -18,13 +18,13 @@ endif
 king_functions.o: king_functions.c king_functions.h chessBoard.h piece_functions.h main.h
 	gcc $(CFLAGS) -c king_functions.c -o king_functions.o 
 
-pieces_list.o: pieces_list.c pieces_list.h
+pieces_list.o: pieces_list.c pieces_list.h chessBoard.h
 	gcc $(CFLAGS) -c pieces_list.c -o pieces_list.o
 
 piece_functions.o: piece_functions.c piece_functions.h chessBoard.h king_functions.h debug.h
 	gcc $(CFLAGS) -c piece_functions.c -D DEBUGON -o piece_functions.o
 
-chessBoard.o: chessBoard.c chessBoard.h
+chessBoard.o: chessBoard.c chessBoard.h pieces_list.h
 	gcc $(CFLAGS) -c chessBoard.c -o chessBoard.o
 
 main.o: main.c main.h chessBoard.h piece_functions.h pieces_list.h king_functions.h debug.h
@@ -42,9 +42,9 @@ clean:
 # Test targets
 
 listTest$(EXEEXT): pieces_list.c pieces_list.h listTest.c chessBoard.h
-	gcc $(CFLAGS) pieces_list.c listTest.c -o listTest
+	gcc $(CFLAGS) pieces_list.c listTest.c chessBoard.o -o listTest
 
 chessBoard_test$(EXEEXT): chessBoard.o chessBoard_test.c chessBoard.h
-	gcc $(CFLAGS) chessBoard.o chessBoard_test.c -o chessBoard_test
+	gcc $(CFLAGS) chessBoard.o pieces_list.o chessBoard_test.c -o chessBoard_test
 
 .DEFAULT_GOAL := all

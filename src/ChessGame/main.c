@@ -15,6 +15,8 @@
 int kingStatusBlack = 0, kingStatusWhite = 0, tower1WhiteStatus = 0, tower1BlackStatus = 0,
     tower2BlackStatus = 0, tower2WhiteStatus = 0;
 
+a_piece *the_list = NULL;
+
 void printLines(void)
 {
     printf("\n");
@@ -135,7 +137,8 @@ void print2PlayerModeInfo()
     printf("\n\nWelcome to classic chess! enter input as shown: pieceStartPosition pieceEndPosition\n");
     printf("For example to move a piece from A2 to B2 enter input: A2 B2\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
-    printf("enter 'quit' to leave the mode\n\n");
+    printf("enter 'quit' to leave the mode\n");
+    printf("enter 'show' to see all dead pieces\n\n");
     confirm();
     clear_buffer();
 }
@@ -148,9 +151,86 @@ void printPawnChessInfo()
     printf("When a pawn have reached to the final row it will promote to a randomly choosen piece from the player\n");
     printf("(Queen, Bishop, Tower, Horse)\n");
     printf("Player 1 plays as white while player 2 plays as black\n");
-    printf("enter 'quit' to leave the mode\n\n");
+    printf("enter 'quit' to leave the mode\n");
+    printf("enter 'show' to see all dead pieces\n\n");
     confirm();
     clear_buffer();
+}
+int moveThreatedKing(char board[8][8], char color, char player)
+{
+    char command[10];
+    char *end, *start;
+    bool valid = false;
+    struct coord p1, p2;
+
+    printf("\nPlayer %d Save the king! ", player);
+    do
+    {
+        readString(command, 10);
+        if (strcmp(command, "quit") == 0)
+        {
+            return -1;
+        }
+        start = strtok(command, " ");
+        end = strtok(NULL, " ");
+
+        if (start == NULL || end == NULL)
+        {
+            printf("Invalid input for chess move try again in this format(startPos endPos): ");
+        }
+        else if (positionStrings(start) && positionStrings(end))
+        {
+            p1 = getChessIndex(start);
+            p2 = getChessIndex(end);
+            char pieceStart = getPieceAtPosition(board, p1.row, p1.col);
+            if (pieceStart == KING + color)
+            {
+                valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!valid)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
+                    {
+                        printf("The king is still in danger after that move\n");
+                        moveThreatedKing(board, color, player);
+                    }
+                    else
+                    {
+                        the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                    }
+                }
+            }
+            else if (pieceStart != color + KING)
+            {
+                valid = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                if (!valid)
+                {
+                    printf("The chess move is invalid, try again: ");
+                }
+                else
+                {
+                    if (kingIsCheckInMove(board, p1.row, p1.col, color, p2.row, p2.col))
+                    {
+                        printf("The king is still in danger after that move\n");
+                        moveThreatedKing(board, color, player);
+                    }
+                    else
+                    {
+                        the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                    }
+                }
+            }
+            else
+            {
+                printf("You have to protect the king away from danger: ");
+            }
+        }
+    } while (!valid);
+
+    return valid;
 }
 int player1(char board[8][8])
 {
@@ -180,9 +260,14 @@ int player1(char board[8][8])
     do
     {
         readString(command, 10);
-        if (equalStrings(command, "quit"))
+        if (strcmp(command, "quit") == 0)
         {
             break;
+        }
+        else if (strcmp(command, "show") == 0)
+        {
+            printList(the_list);
+            player1(board);
         }
 
         start = strtok(command, " ");
@@ -216,14 +301,14 @@ int player1(char board[8][8])
                         if (p2.row == 0 && p2.col == 2 && tower1WhiteStatus == 0)
                         {
                             DEBUG("We make a rocked move using left tower");
-                            makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                            the_list = makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col, the_list);
                             kingStatusWhite++;
                             break;
                         }
                         else if (p2.row == 0 && p2.col == 6 && tower2WhiteStatus == 0)
                         {
                             DEBUG("We make a rocked move using right tower");
-                            makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                            the_list = makeRockMove(board, WHITE, p1.row, p1.col, p2.row, p2.col, the_list);
                             kingStatusWhite++;
                             break;
                         }
@@ -232,12 +317,11 @@ int player1(char board[8][8])
                     if (!validMove)
                     {
                         DEBUG("invalid move");
-                        printf("kingstatusWhite: %d, tower1Whitestatus: %d, tower2Whitestatus: %d\n", kingStatusWhite, tower1WhiteStatus, tower2WhiteStatus);
                         printf("The chess move is invalid, try again: ");
                     }
                     else
                     {
-                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
                         if (kingInCheck(board, WHITE))
                         {
                             printf("The white king will enter a square where it get threated, invalid!\n");
@@ -257,16 +341,16 @@ int player1(char board[8][8])
                     }
                     else
                     {
-                        char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
-                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
-                        if (kingInCheck(board, WHITE))
+                        if (kingIsCheckInMove(board, p1.row, p1.col, WHITE, p2.row, p2.col))
                         {
-                            printf("The white king will enter a square where it get threated, invalid!\n");
-                            setPieceAtPosition(board, pieceStart, p1.row, p1.col);
-                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            printf("The white king will be in danger after that move!\n");
                             player1(board);
                         }
-                        else if (pieceStart == TOWER && p1.col == 0)
+                        else
+                        {
+                            the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                        }
+                        if (pieceStart == TOWER && p1.col == 0)
                         {
                             tower1WhiteStatus++;
                         }
@@ -331,6 +415,11 @@ int player2(char board[8][8])
         {
             break;
         }
+        else if (strcmp(command, "show") == 0)
+        {
+            printList(the_list);
+            player2(board);
+        }
 
         start = strtok(command, " ");
         end = strtok(NULL, " ");
@@ -363,14 +452,14 @@ int player2(char board[8][8])
                         if (p2.row == 7 && p2.col == 2 && tower1BlackStatus == 0)
                         {
                             DEBUG("We make a rocked move using left tower");
-                            makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                            the_list = makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col, the_list);
                             kingStatusBlack++;
                             break;
                         }
                         else if (p2.row == 0 && p2.col == 6 && tower2BlackStatus == 0)
                         {
                             DEBUG("We make a rocked move using right tower");
-                            makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                            the_list = makeRockMove(board, BLACK, p1.row, p1.col, p2.row, p2.col, the_list);
                             kingStatusBlack++;
                             break;
                         }
@@ -382,7 +471,7 @@ int player2(char board[8][8])
                     }
                     else
                     {
-                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
+                        the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
                         if (kingInCheck(board, BLACK))
                         {
                             printf("The black king will enter a square where it get threated, invalid!\n");
@@ -402,16 +491,16 @@ int player2(char board[8][8])
                     }
                     else
                     {
-                        char Oldpiece = getPieceAtPosition(board, p2.row, p2.col);
-                        changeBoard(board, p1.row, p1.col, p2.row, p2.col);
-                        if (kingInCheck(board, BLACK))
+                        if (kingIsCheckInMove(board, p1.row, p1.col, BLACK, p2.row, p2.col))
                         {
-                            printf("The black king will enter a square where it get threated, invalid!\n");
-                            setPieceAtPosition(board, pieceStart, p1.row, p1.col);
-                            setPieceAtPosition(board, Oldpiece, p2.row, p2.col);
+                            printf("The black king will be in danger after that move!\n");
                             player2(board);
                         }
-                        else if (pieceStart == TOWER + BLACK && p1.col == 0)
+                        else
+                        {
+                            the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                        }
+                        if (pieceStart == TOWER + BLACK && p1.col == 0)
                         {
                             tower1BlackStatus++;
                         }
@@ -478,7 +567,6 @@ bool equalStrings(char *string1, char *string2)
 
 void chessGameGo(int chessMode)
 {
-    // a_piece *newList = create_list();
     bool go = true;
     int temp;
     char chessBoard[8][8];
@@ -559,6 +647,7 @@ void chessGameGo(int chessMode)
     }
     tower1WhiteStatus = 0, tower2WhiteStatus = 0, kingStatusWhite = 0, kingStatusBlack = 0,
     tower1BlackStatus = 0, tower2BlackStatus = 0;
+    the_list = delete_list(the_list);
 }
 bool confirmQuitGame()
 {

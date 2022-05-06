@@ -4,11 +4,11 @@
 #include "king_functions.h"
 #include "debug.h"
 
-void makeRockMove(char board[8][8], int color, int row, int col, int moveRow, int moveCol)
+a_piece *makeRockMove(char board[8][8], int color, int row, int col, int moveRow, int moveCol, a_piece *head)
 {
     if (isBlack(color))
     {
-        changeBoard(board, row, col, moveRow, moveCol);
+        head = changeBoard(board, row, col, moveRow, moveCol, head);
         if (board[row][moveCol + 1] == TOWER + BLACK)
         {
             setPieceAtPosition(board, TOWER + BLACK, row, col + 1);
@@ -22,7 +22,7 @@ void makeRockMove(char board[8][8], int color, int row, int col, int moveRow, in
     }
     else
     {
-        changeBoard(board, row, col, moveRow, moveCol);
+        head = changeBoard(board, row, col, moveRow, moveCol, head);
         if (board[row][moveCol + 1] == TOWER)
         {
             setPieceAtPosition(board, TOWER, row, col + 1);
@@ -34,6 +34,7 @@ void makeRockMove(char board[8][8], int color, int row, int col, int moveRow, in
             setPieceAtPosition(board, EMPTY, row, col - 4);
         }
     }
+    return head;
 }
 
 bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)

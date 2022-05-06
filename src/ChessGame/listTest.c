@@ -22,8 +22,12 @@ int main(void)
 
     VERIFY(!list_empty(thelist), "list is not empty");
 
-    char onemore = QUEEN;
-    thelist = push(thelist, onemore);
+    for (int i = 0; i < 29; i++)
+    {
+        char onemore = QUEEN;
+        thelist = push(thelist, onemore);
+    }
+    printList(thelist);
 
     TEST_CASE("Delete the list");
     thelist = delete_list(thelist);

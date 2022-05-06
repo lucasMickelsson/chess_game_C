@@ -36,4 +36,6 @@ bool list_empty(a_piece *headptr);
  */
 a_piece *delete_list(a_piece *headptr);
 
+void printList(a_piece *head);
+
 #endif

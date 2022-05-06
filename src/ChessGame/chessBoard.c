@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "chessBoard.h"
+#include "pieces_list.h"
 
 void initChessBoard(char board[8][8])
 {
@@ -191,10 +192,21 @@ void printChessBoardLines()
         printf("-");
     }
 }
-void changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol)
+a_piece *changeBoard(char board[8][8], int oldRow, int oldCol, int newRow, int newCol, a_piece *head)
 {
     char pieceCheck = getPieceAtPosition(board, newRow, newCol);
 
+    if (pieceCheck != EMPTY) // if we are going to knock a piece out we need to set the position to empty before we swap
+    {
+        head = push(head, pieceCheck);
+    }
+    swap(board, oldRow, oldCol, newRow, newCol);
+
+    return head;
+}
+void swap(char board[8][8], int oldRow, int oldCol, int newRow, int newCol)
+{
+    char pieceCheck = getPieceAtPosition(board, newRow, newCol);
     if (pieceCheck != EMPTY) // if we are going to knock a piece out we need to set the position to empty before we swap
     {
         setPieceAtPosition(board, EMPTY, newRow, newCol);
