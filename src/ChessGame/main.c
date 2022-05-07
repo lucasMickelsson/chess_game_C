@@ -127,7 +127,7 @@ void handleChessOptions()
 }
 void confirm()
 {
-    printf("Press any key to continue");
+    printf("\nPress any key to continue");
     getch();
     printf("\n\n\n");
 }
@@ -686,7 +686,8 @@ int main(void)
             break;
 
         case 2:
-            printf("This is the rules");
+            readAndWrite();
+            confirm();
             break;
 
         case 3:
@@ -701,4 +702,24 @@ int main(void)
     } while (!exitProgram);
 
     return 0;
+}
+void readAndWrite()
+{
+    FILE *fileptr;
+    char ch;
+    fileptr = fopen("chess.txt", "r");
+
+    if (fileptr == NULL)
+    {
+        printf("Could not open file for reading!\n");
+    }
+    else
+    {
+        do
+        {
+            ch = fgetc(fileptr);
+            printf("%c", ch);
+        } while (ch != EOF);
+    }
+    fclose(fileptr);
 }

@@ -1,15 +1,18 @@
-Chess is a strategial 2 player game where the goal is to kill the opponent's king (i.e. get him/her in Checkmate)
+
+
+Chess is a strategy 2 player game where the goal is to kill the opponent's king (i.e. get him/her in Checkmate)
 
 The Board
 The chess board is an 8 by 8 grid. The initial configuration of the pieces is as follows:
 
-- Tower 
-- Horse
-- Bishop 
-- Queen 
-- King 
-- Tower
-- Pawn
+bTower bHorse bBishop bQueen bKing bBishop bHorse bTower
+bPawn  bPawn  bPawn   bPawn  bPawn bPawn   bPawn  bPawn
+
+
+
+
+wPawn  wPawn  wPawn   wPawn  wPawn wPawn   wPawn  wPawn
+wTower wHorse wBishop wQueen wKing wBishop wHorse wTower
 
 The Pieces:
 
