@@ -13,9 +13,9 @@
 #define play2 2
 
 int kingStatusBlack = 0, kingStatusWhite = 0, tower1WhiteStatus = 0, tower1BlackStatus = 0,
-    tower2BlackStatus = 0, tower2WhiteStatus = 0;
+    tower2BlackStatus = 0, tower2WhiteStatus = 0; // for the rocked move
 
-a_piece *the_list = NULL;
+a_piece *the_list = NULL; // Empty list
 
 void printLines(void)
 {
@@ -366,7 +366,7 @@ int player1(char board[8][8])
         }
     } while (!validMove);
 
-    if (equalStrings(command, "quit"))
+    if (strcmp(command, "quit") == 0)
     {
         return -1;
     }
@@ -404,7 +404,7 @@ int player2(char board[8][8])
     do
     {
         readString(command, 10);
-        if (equalStrings(command, "quit"))
+        if (strcmp(command, "quit") == 0)
         {
             break;
         }
@@ -511,7 +511,7 @@ int player2(char board[8][8])
         }
     } while (!validMove);
 
-    if (equalStrings(command, "quit"))
+    if (strcmp(command, "quit") == 0)
     {
         return -1;
     }
@@ -539,17 +539,6 @@ void pawnLastPosStatusSet(char board[8][8], int row, int col)
     else
     {
         setPieceAtPosition(board, choice, row, col);
-    }
-}
-bool equalStrings(char *string1, char *string2)
-{
-    if (strcmp(string1, string2) == 0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
     }
 }
 
