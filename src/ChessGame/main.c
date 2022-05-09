@@ -704,6 +704,7 @@ void readAndWrite()
     }
     else
     {
+        printLogo();
         do
         {
             ch = fgetc(fileptr);
