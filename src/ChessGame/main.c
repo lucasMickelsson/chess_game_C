@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
+#include <ctype.h>
 #include "chessBoard.h"
 #include "main.h"
 #include "piece_functions.h"
@@ -165,7 +166,9 @@ int moveThreatedKing(char board[8][8], char color, char player)
     do
     {
         readString(command, 10);
-        if (strcmp(command, "quit") == 0)
+        trimLeft(command);
+        normalize(command);
+        if (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)
         {
             return -1;
         }
@@ -258,7 +261,9 @@ int player1(char board[8][8])
     do
     {
         readString(command, 10);
-        if (strcmp(command, "quit") == 0)
+        trimLeft(command);
+        normalize(command);
+        if (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)
         {
             break;
         }
@@ -366,7 +371,7 @@ int player1(char board[8][8])
         }
     } while (!validMove);
 
-    if (strcmp(command, "quit") == 0)
+    if (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)
     {
         return -1;
     }
@@ -404,7 +409,9 @@ int player2(char board[8][8])
     do
     {
         readString(command, 10);
-        if (strcmp(command, "quit") == 0)
+        trimLeft(command);
+        normalize(command);
+        if (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)
         {
             break;
         }
@@ -511,7 +518,7 @@ int player2(char board[8][8])
         }
     } while (!validMove);
 
-    if (strcmp(command, "quit") == 0)
+    if (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)
     {
         return -1;
     }
@@ -541,7 +548,19 @@ void pawnLastPosStatusSet(char board[8][8], int row, int col)
         setPieceAtPosition(board, choice, row, col);
     }
 }
-
+void trimLeft(char string[])
+{
+    int noOfSpaces = 0;
+    while (string[noOfSpaces] == ' ')
+    {
+        noOfSpaces++;
+    }
+    int length = strlen(string);
+    for (int index = 0; index + noOfSpaces <= length; index++)
+    {
+        string[index] = string[index + noOfSpaces];
+    }
+}
 void chessGameGo(int chessMode)
 {
     bool go = true;
@@ -638,6 +657,17 @@ bool confirmQuitGame()
     else
     {
         return false;
+    }
+}
+
+void normalize(char string[])
+{
+    for (int i = 0; string[i] != '\0'; i++)
+    {
+        if (islower(string[i]))
+        {
+            string[i] = toupper(string[i]);
+        }
     }
 }
 

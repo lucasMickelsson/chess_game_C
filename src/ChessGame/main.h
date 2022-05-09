@@ -113,4 +113,16 @@ bool confirmQuitGame();
  */
 void readAndWrite();
 
+/**
+ *Function for removing blanks at the beginnning of a string
+ * @param string the string to be trimmed
+ */
+void trimLeft(char string[]);
+
+/**
+ * Function for making a string a chess move
+ * @param string the string to be normalized
+ */
+void normalize(char string[]);
+
 #endif
