@@ -12,6 +12,5 @@ struct coord findPiece(char board[8][8], char color, char piece);
 bool kingIsCheckInMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol);
 bool gameEndsIndraw(char board[8][8]);
 bool checkForAnyLegalMove(char board[8][8], char color);
-bool checkValidRockedMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol);
 
 #endif

@@ -16,6 +16,8 @@
 int kingStatusBlack = 0, kingStatusWhite = 0, tower1WhiteStatus = 0, tower1BlackStatus = 0,
     tower2BlackStatus = 0, tower2WhiteStatus = 0; // for the rocked move
 
+int blackPawns[8] = {0};
+int whitePawns[8] = {0};
 a_piece *the_list = NULL; // Empty list
 
 void printLines(void)
@@ -255,7 +257,7 @@ int player1(char board[8][8])
         }
     }
 
-    printf("\nPlayer 1 Turn:\n");
+    printf("\nPlayer 1 Your turn:\n");
     printf("Enter chess move to make(startPos endPos): ");
 
     do
@@ -330,6 +332,41 @@ int player1(char board[8][8])
                         kingStatusWhite++;
                     }
                 }
+                else if (pieceStart == PAWN)
+                {
+                    if (checkValidPassantMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
+                        blackPawns[p2.col] == 2)
+                    {
+                        the_list = makePassantMove(the_list, board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                        break;
+                    }
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        if (kingIsCheckInMove(board, p1.row, p1.col, WHITE, p2.row, p2.col))
+                        {
+                            printf("The white king will be in danger after that move!\n");
+                            player1(board);
+                        }
+                        else
+                        {
+                            the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                            if (p2.row == 3)
+                            {
+                                whitePawns[p2.col] += 2;
+                            }
+                        }
+                        if (getPieceAtPosition(board, p2.row, p2.col) == PAWN &&
+                            p2.row == 7)
+                        {
+                            pawnLastPosStatusSet(board, p2.row, p2.col);
+                        }
+                    }
+                }
                 else
                 {
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
@@ -355,11 +392,6 @@ int player1(char board[8][8])
                         else if (pieceStart == TOWER && p1.col == 7)
                         {
                             tower2WhiteStatus++;
-                        }
-                        else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN &&
-                                 p2.row == 7)
-                        {
-                            pawnLastPosStatusSet(board, p2.row, p2.col);
                         }
                     }
                 }
@@ -403,7 +435,7 @@ int player2(char board[8][8])
         }
     }
 
-    printf("\nPlayer 2 Turn:\n");
+    printf("\nPlayer 2 Your turn:\n");
     printf("Enter chess move to make(startPos endPos): ");
 
     do
@@ -477,6 +509,41 @@ int player2(char board[8][8])
                         kingStatusBlack++;
                     }
                 }
+                else if (pieceStart == PAWN + BLACK)
+                {
+                    if (checkValidPassantMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
+                        whitePawns[p2.col] == 2)
+                    {
+                        the_list = makePassantMove(the_list, board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                        break;
+                    }
+                    validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
+                    if (!validMove)
+                    {
+                        printf("The chess move is invalid, try again: ");
+                    }
+                    else
+                    {
+                        if (kingIsCheckInMove(board, p1.row, p1.col, BLACK, p2.row, p2.col))
+                        {
+                            printf("The white king will be in danger after that move!\n");
+                            player1(board);
+                        }
+                        else
+                        {
+                            the_list = changeBoard(board, p1.row, p1.col, p2.row, p2.col, the_list);
+                            if (p2.row == 4)
+                            {
+                                blackPawns[p2.col] += 2;
+                            }
+                        }
+                        if (getPieceAtPosition(board, p2.row, p2.col) == PAWN + BLACK &&
+                            p2.row == 0)
+                        {
+                            pawnLastPosStatusSet(board, p2.row, p2.col);
+                        }
+                    }
+                }
                 else
                 {
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
@@ -502,11 +569,6 @@ int player2(char board[8][8])
                         else if (pieceStart == TOWER + BLACK && p1.col == 7)
                         {
                             tower2BlackStatus++;
-                        }
-                        else if (getPieceAtPosition(board, p2.row, p2.col) == PAWN + BLACK &&
-                                 p2.row == 0)
-                        {
-                            pawnLastPosStatusSet(board, p2.row, p2.col);
                         }
                     }
                 }
@@ -641,9 +703,15 @@ void chessGameGo(int chessMode)
             }
         }
     }
+    resetVariables();
+}
+void resetVariables(void)
+{
     tower1WhiteStatus = 0, tower2WhiteStatus = 0, kingStatusWhite = 0, kingStatusBlack = 0,
     tower1BlackStatus = 0, tower2BlackStatus = 0;
     the_list = delete_list(the_list);
+    memset(blackPawns, 0, 8 * sizeof(int));
+    memset(whitePawns, 0, 8 * sizeof(int));
 }
 bool confirmQuitGame()
 {

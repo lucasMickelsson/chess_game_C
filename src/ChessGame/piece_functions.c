@@ -4,6 +4,59 @@
 #include "king_functions.h"
 #include "debug.h"
 
+a_piece *makePassantMove(a_piece *headptr, char board[8][8], int color, int row, int col, int moveRow, int moveCol)
+{
+    if (isBlack(color))
+    {
+        headptr = changeBoard(board, row, col, moveRow, moveCol, headptr);
+        if (board[moveRow + 1][moveCol] == PAWN)
+        {
+            headptr = push(headptr, PAWN);
+            setPieceAtPosition(board, EMPTY, moveRow + 1, moveCol);
+        }
+    }
+    else
+    {
+        headptr = changeBoard(board, row, col, moveRow, moveCol, headptr);
+        if (board[moveRow - 1][moveCol] == PAWN + BLACK)
+        {
+            headptr = push(headptr, PAWN + BLACK);
+            setPieceAtPosition(board, EMPTY, moveRow - 1, moveCol);
+        }
+    }
+    return headptr;
+}
+bool checkValidPassantMove(char board[8][8], int row, int col, int color, int moveRow, int moveCol)
+{
+    if (isBlack(color))
+    {
+        if (board[row][col] == PAWN + BLACK && board[row][col - 1] == PAWN && row == 3 &&
+            row - 1 == moveRow && col - 1 == moveCol)
+        {
+            return true;
+        }
+        else if (board[row][col] == PAWN + BLACK && board[row][col + 1] == PAWN && row == 3 &&
+                 row - 1 == moveRow && col + 1 == moveCol)
+        {
+            return true;
+        }
+    }
+    else
+    {
+        if (board[row][col] == PAWN && board[row][col - 1] == PAWN + BLACK && row == 4 &&
+            row + 1 == moveRow && col - 1 == moveCol)
+        {
+            return true;
+        }
+        else if (board[row][col] == PAWN && board[row][col + 1] == PAWN + BLACK && row == 4 &&
+                 row + 1 == moveRow && col + 1 == moveCol)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 a_piece *makeRockMove(char board[8][8], int color, int row, int col, int moveRow, int moveCol, a_piece *head)
 {
     if (isBlack(color))

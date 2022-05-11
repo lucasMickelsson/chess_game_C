@@ -125,4 +125,9 @@ void trimLeft(char string[]);
  */
 void normalize(char string[]);
 
+/**
+ * Function for reseting the temporary variables and also delete the list
+ */
+void resetVariables(void);
+
 #endif
