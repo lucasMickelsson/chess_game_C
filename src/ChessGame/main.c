@@ -334,11 +334,13 @@ int player1(char board[8][8])
                 }
                 else if (pieceStart == PAWN)
                 {
-                    if (checkValidPassantMove(board, p1.row, p1.col, WHITE, p2.row, p2.col) &&
-                        blackPawns[p2.col] == 2)
+                    if (checkValidPassantMove(board, p1.row, p1.col, WHITE, p2.row, p2.col))
                     {
-                        the_list = makePassantMove(the_list, board, WHITE, p1.row, p1.col, p2.row, p2.col);
-                        break;
+                        if (blackPawns[p2.col] == 2)
+                        {
+                            the_list = makePassantMove(the_list, board, WHITE, p1.row, p1.col, p2.row, p2.col);
+                            break;
+                        }
                     }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
@@ -358,6 +360,10 @@ int player1(char board[8][8])
                             if (p2.row == 3)
                             {
                                 whitePawns[p2.col] += 2;
+                            }
+                            else
+                            {
+                                whitePawns[p2.col] += 1;
                             }
                         }
                         if (getPieceAtPosition(board, p2.row, p2.col) == PAWN &&
@@ -511,11 +517,13 @@ int player2(char board[8][8])
                 }
                 else if (pieceStart == PAWN + BLACK)
                 {
-                    if (checkValidPassantMove(board, p1.row, p1.col, BLACK, p2.row, p2.col) &&
-                        whitePawns[p2.col] == 2)
+                    if (checkValidPassantMove(board, p1.row, p1.col, BLACK, p2.row, p2.col))
                     {
-                        the_list = makePassantMove(the_list, board, BLACK, p1.row, p1.col, p2.row, p2.col);
-                        break;
+                        if (whitePawns[p2.col] == 2)
+                        {
+                            the_list = makePassantMove(the_list, board, BLACK, p1.row, p1.col, p2.row, p2.col);
+                            break;
+                        }
                     }
                     validMove = validMoves(board, pieceStart, p1.row, p1.col, p2.row, p2.col);
                     if (!validMove)
@@ -535,6 +543,10 @@ int player2(char board[8][8])
                             if (p2.row == 4)
                             {
                                 blackPawns[p2.col] += 2;
+                            }
+                            else
+                            {
+                                blackPawns[p2.col] += 1;
                             }
                         }
                         if (getPieceAtPosition(board, p2.row, p2.col) == PAWN + BLACK &&
